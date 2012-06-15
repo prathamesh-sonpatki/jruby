@@ -2,3 +2,6 @@
   Translation of JRuby Grammar into Beaver grammar
 
 */
+
+%package "org.jruby.parser";
+%class "JavaSignatureBeaverParser";
