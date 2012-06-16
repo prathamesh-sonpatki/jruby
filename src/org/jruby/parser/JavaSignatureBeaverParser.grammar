@@ -1,0 +1,11 @@
+/*
+  Translation of JRuby Grammar into Beaver grammar
+
+*/
+
+%package "org.jruby.parser";
+%class "JavaSignatureBeaverParser";
+
+%terminals = BOOLEAN, BYTE, SHORT, INT, LONG, CHAR, FLOAT, DOUBLE, VOID, // primitive types 
+
+;
