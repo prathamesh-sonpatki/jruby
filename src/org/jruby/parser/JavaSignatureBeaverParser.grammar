@@ -7,5 +7,14 @@
 %class "JavaSignatureBeaverParser";
 
 %terminals = BOOLEAN, BYTE, SHORT, INT, LONG, CHAR, FLOAT, DOUBLE, VOID, // primitive types 
-
+            PUBLIC, PRIVATE, PROTECTED, STATIC, ABSTRACT, FINAL, NATIVE, SYNCHRONIZED, TRANSIENT, VOLATILE, STRICTFP //modifiers
 ;
+
+
+
+
+
+
+
+
+

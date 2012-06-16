@@ -86,17 +86,17 @@ Identifier     = [:jletter:] [:jletterdigit:]*
     "void"          { return return newToken(Terminals.VOID);         }
 
     // modifiers
-    "public"        { return JavaSignatureBeaverParser.PUBLIC;       }
-    "protected"     { return JavaSignatureBeaverParser.PROTECTED;    }
-    "private"       { return JavaSignatureParser.PRIVATE;      }
-    "static"        { return JavaSignatureParser.STATIC;       }
-    "abstract"      { return JavaSignatureParser.ABSTRACT;     }
-    "final"         { return JavaSignatureParser.FINAL;        }
-    "native"        { return JavaSignatureParser.NATIVE;       }
-    "synchronized"  { return JavaSignatureParser.SYNCHRONIZED; }
-    "transient"     { return JavaSignatureParser.TRANSIENT;    }
-    "volatile"      { return JavaSignatureParser.VOLATILE;     }
-    "strictfp"      { return JavaSignatureParser.STRICTFP;     }
+    "public"        { return return newToken(Terminals.PUBLIC);       }
+    "protected"     { return return newToken(Terminals.PROTECTED)   }
+    "private"       { return return newToken(Terminals.PRIVATE);      }
+    "static"        { return return newToken(Terminals.STATIC);       }
+    "abstract"      { return return newToken(Terminals.ABSTRACT);     }
+    "final"         { return return newToken(Terminals.FINAL);        }
+    "native"        { return return newToken(Terminals.NATIVE);       }
+    "synchronized"  { return return newToken(Terminals.SYNCHRONIZED); }
+    "transient"     { return return newToken(Terminals.TRANSIENT);    }
+    "volatile"      { return return newToken(Terminals.VOLATILE);     }
+    "strictfp"      { return return newToken(Terminals.STRICTFP);     }
 
     "@"             { return JavaSignatureParser.AT;           }
     "&"             { return JavaSignatureParser.AND;          }
