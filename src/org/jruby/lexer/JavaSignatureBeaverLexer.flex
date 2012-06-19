@@ -98,29 +98,29 @@ Identifier     = [:jletter:] [:jletterdigit:]*
     "volatile"      { return return newToken(Terminals.VOLATILE);     }
     "strictfp"      { return return newToken(Terminals.STRICTFP);     }
 
-    "@"             { return JavaSignatureParser.AT;           }
-    "&"             { return JavaSignatureParser.AND;          }
-    "."             { return JavaSignatureParser.DOT;          }
-    ","             { return JavaSignatureParser.COMMA;        }
-    "\u2026"        { return JavaSignatureParser.ELLIPSIS;     }
-    "..."           { return JavaSignatureParser.ELLIPSIS;     }
-    "="             { return JavaSignatureParser.EQUAL;        }
-    "{"             { return JavaSignatureParser.LCURLY;       }
-    "}"             { return JavaSignatureParser.RCURLY;       }
-    "("             { return JavaSignatureParser.LPAREN;       }
-    ")"             { return JavaSignatureParser.RPAREN;       }
-    "["             { return JavaSignatureParser.LBRACK;       }
-    "]"             { return JavaSignatureParser.RBRACK;       }
-    "?"             { return JavaSignatureParser.QUESTION;     }
-    "<"             { return JavaSignatureParser.LT;           }
-    ">"             { return JavaSignatureParser.GT;           }
-    "throws"        { return JavaSignatureParser.THROWS;       }
-    "extends"       { return JavaSignatureParser.EXTENDS;      }
-    "super"         { return JavaSignatureParser.SUPER;        }
-    ">>"            { return JavaSignatureParser.RSHIFT;       }
-    ">>>"           { return JavaSignatureParser.URSHIFT;      }
+    "@"             { return newToken(Terminals.AT);           }
+    "&"             { return newToken(Terminals.AND);          }
+    "."             { return newToken(Terminals.DOT);          }
+    ","             { return newToken(Terminals.COMMA);        }
+    "\u2026"        { return newToken(Terminals.ELLIPSIS);     }
+    "..."           { return newToken(Terminals.ELLIPSIS);     }
+    "="             { return newToken(Terminals.EQUAL);        }
+    "{"             { return newToken(Terminals.LCURLY);       }
+    "}"             { return newToken(Terminals.RCURLY);       }
+    "("             { return newToken(Terminals.LPAREN);       }
+    ")"             { return newToken(Terminals.RPAREN);       }
+    "["             { return newToken(Terminals.LBRACK);       }
+    "]"             { return newToken(Terminals.RBRACK);       }
+    "?"             { return newToken(Terminals.QUESTION);     }
+    "<"             { return newToken(Terminals.LT);           }
+    ">"             { return newToken(Terminals.GT);           }
+    "throws"        { return newToken(Terminals.THROWS));       }
+    "extends"       { return newToken(Terminals.EXTENDS));      }
+    "super"         { return newToken(Terminals.SUPER));        }
+    ">>"            { return newToken(Terminals.RSHIFT));       }
+    ">>>"           { return newToken(Terminals.URSHIFT));      }
 
-    {Identifier}    { return JavaSignatureParser.IDENTIFIER;   }
+    {Identifier}    { return newToken(Terminals.IDENTIFIER);   }
     \"              { yybegin(STRING); } 
     \'              { yybegin(CHARACTER); } 
     {WhiteSpace}    { }
@@ -129,7 +129,7 @@ Identifier     = [:jletter:] [:jletterdigit:]*
 <CHARACTER> {
     \' { characterResult = true;
          yybegin(YYINITIAL);
-         return JavaSignatureParser.CHARACTER_LITERAL; 
+         return newToken(Terminals.CHARACTER_LITERAL); 
        }
     .  { stringBuf.append(yytext()); }
 }
@@ -138,7 +138,7 @@ Identifier     = [:jletter:] [:jletterdigit:]*
   \"                {
                      stringResult = true;
                      yybegin(YYINITIAL); 
-                     return JavaSignatureParser.STRING_LITERAL;
+                     return newToken(Terminals.STRING_LITERAL);
   }
   [^\n\r\"\\]+      { stringBuf.append( yytext() ); }
   \\t               { stringBuf.append('\t'); }
