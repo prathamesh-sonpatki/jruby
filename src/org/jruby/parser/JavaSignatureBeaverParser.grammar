@@ -27,18 +27,11 @@
 %import "org.jruby.ast.java_signature.SignatureNode";
 %import "org.jruby.ast.java_signature.StringLiteral";
 %import "org.jruby.ast.java_signature.TypeNode";
-%import "org.jruby.lexer.JavaSignatureLexer";
-
+%import "org.jruby.lexer.JavaSignatureBeaverLexer";
 %class "JavaSignatureBeaverParser";
 
 %embed {:
-    
-    /*   private static JavaSignatureBeaverParser parser = new JavaSignatureBeaverParser();
-
-        public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
-            return (SignatureNode) parser.nextToken(JavaSignatureLexer.create(in));
-        }
-    */
+   
         :};
 
 %terminals  BOOLEAN, BYTE, SHORT, INT, LONG, CHAR, FLOAT, DOUBLE, VOID, // primitive types 
@@ -80,76 +73,76 @@
 
 %goal program;
 
-program = method_header.m {:
-                         return new SignatureNode(m);
+program = method_header.m{:
+                          return new Symbol(new SignatureNode(m));
                          //$$ = $1;
                         :}
         | constructor_declaration {:
-                                   return new SignatureNode(m);
+                                   return new Symbol(new SignatureNode(m));
                                    // $$ = $1;
                                    :}
     ;
 
 
-type = primitive_type | reference_type.r {:
-                                          return new TypeNode((TypeNode)r);
+type = primitive_type | reference_type.r{:
+                                         return new Symbol(new TypeNode((TypeNode)r));
                                           //$$ = $<TypeNode>1;
                                           :}
     ;
 // PrimitiveTypeNode
 primitive_type =
       BYTE {:
-        return PrimitiveTypeNode.BYTE;
+            return new Symbol(PrimitiveTypeNode.BYTE);
         //$$ = PrimitiveTypeNode.BYTE;
            :}
     | SHORT {:
-        return PrimitiveTypeNode.SHORT;
+             return new Symbol(PrimitiveTypeNode.SHORT);
         //$$ = PrimitiveTypeNode.SHORT;
         :}
     | INT {:
-        return PrimitiveTypeNode.INT;
+           return new Symbol(PrimitiveTypeNode.INT);
         //$$ = PrimitiveTypeNode.INT;
         :}
     | LONG {:
-        return PrimitiveTypeNode.LONG;
+            return new Symbol(PrimitiveTypeNode.LONG);
         //$$ = PrimitiveTypeNode.LONG;
         :}
     | CHAR {:
-        return PrimitiveTypeNode.CHAR;
+            return new Symbol(PrimitiveTypeNode.CHAR);
         //$$ = PrimitiveTypeNode.CHAR;
         :}
     | BOOLEAN {:
-        return PrimitiveTypeNode.BOOLEAN;
+               return new Symbol(PrimitiveTypeNode.BOOLEAN);
         //$$ = PrimitiveTypeNode.BOOLEAN;
         :} 
     | FLOAT {:
-        return PrimitiveTypeNode.FLOAT;
+             return new Symbol(PrimitiveTypeNode.FLOAT);
         //$$ = PrimitiveTypeNode.FLOAT;
         :}
     | DOUBLE {:
-        return PrimitiveTypeNode.DOUBLE;
+              return new Symbol(PrimitiveTypeNode.DOUBLE);
         //$$ = PrimitiveTypeNode.DOUBLE;
         :}
     ;
 // ReferenceTypeNode
 reference_type = class_or_interface_type.c {:
-                                            return new ReferenceTypeNode(c);
+                                            return new Symbol(new ReferenceTypeNode(c));
                                             // $$ = $1;
                                           :}
  | array_type.a {:
-                  return new ReferenceTypeNode((ReferenceTypeNode)r);
+                 return new Symbol(new ReferenceTypeNode((ReferenceTypeNode)r));
                   //$$ = $<ReferenceTypeNode>1;
                 :}
     ;
 // String
 type_variable = IDENTIFIER.id {: 
-                               return new String(id);
+                               return new Symbol(new String(id));
                                // $$ = $1; 
                               :}
     ;
 // ReferenceTypeNode
 class_or_interface = name.n {:
-                             return new ReferenceTypeNode(n);
+                             return new Symbol(new ReferenceTypeNode(n));
                              // $$ = new ReferenceTypeNode($1);
                             :}
  | class_or_interface.c LT type_argument_list_1.t DOT name.n {:
@@ -159,7 +152,7 @@ class_or_interface = name.n {:
      //$$ = $1;
      c.setGenericsTyping(genericTyping);
      //$1.setGenericsTyping(genericTyping);
-     return result;
+                                                              return new Symbol(result);
      :}
     ;
 // ReferenceTypeNode
@@ -171,7 +164,7 @@ class_or_interface_type = class_or_interface
                                                //$$ = $1;
                                                c.setGenericsTyping(genericTyping);
                                                //$1.setGenericsTyping(genericTyping);
-                                               return result;
+                                                   return new Symbol(result);
                                                    :}
     ;
 // ReferenceTypeNode
@@ -184,13 +177,13 @@ interface_type = class_or_interface_type
 array_type = primitive_type.t dims.d {:
                                     d.setTypeForArray(t);
                                     //$2.setTypeForArray($1);
-                                      return d;
+                                      return new Symbol(d);
                                     //$$ = $2;
  :}
  | name.n dims.d {:
      d.setTypeOfArray(new ReferenceTypeNode(n));
      //$2.setTypeForArray(new ReferenceTypeNode($1));
-     return d;
+     return new Symbol(d);
      //$$ = $2;
  :}
  | class_or_interface.c LT type_argument_list_1.t DOT name.n dims.d {:
@@ -198,7 +191,7 @@ array_type = primitive_type.t dims.d {:
      //$1.setGenericsTyping("<" + $3 + "." + $5);
      d.setTypeForArray(c);
      //$6.setTypeForArray($1);
-     return d;
+     return new Symbol(d);
      //$$ = $6;
  :}
  | class_or_interface.c LT type_argument_list_1.t dims.d {:
@@ -206,116 +199,116 @@ array_type = primitive_type.t dims.d {:
      //$1.setGenericsTyping("<" + $3);
      d.setTypeForArray(c);
      //$4.setTypeForArray($1);
-     return d;
+     return new Symbol(d);
      //$$ = $4;
  :}
     ;
 // String
 wildcard = QUESTION {: 
-                     return "?";
+                     return new Symbol("?");
                      //$$ = "?";
  :} | QUESTION EXTENDS reference_type.t {:
-     return "? extends " + t.getFullyTypedName();
+    return new Symbol("? extends " + t.getFullyTypedName());
      //$$ = "? extends " + $3.getFullyTypedName();
  :} | QUESTION SUPER reference_type.t {: 
-     return "? super " +  t.getFullyTypedName();
+    return new Symbol("? super " +  t.getFullyTypedName());
      //$$ = "? super " + $3.getFullyTypedName();
  :}
     ;
 // String
 wildcard_1 = QUESTION GT {:
-                          return "?>";
+                          return new Symbol("?>");
                           //$$ = "?>"; 
  :} | QUESTION EXTENDS reference_type_1.t {:
-     return "? extends " + t;
+    return new Symbol("? extends " + t);
      //$$ = "? extends " + $3;
  :} | QUESTION SUPER reference_type_1.t {: 
-     return "? super " + t ;
+    return new Symbol("? super " + t) ;
      //$$ = "? super " + $3;
  :}
     ;
 // String
 wildcard_2 = QUESTION RSHIFT {: 
-                              return "?>>";
+                              return new Symbol("?>>");
                               //$$ = "?>>"; 
  :} | QUESTION EXTENDS reference_type_2.t {: 
-     return "? extends " + t;
+                                           return new Symbol("? extends " + t);
      //$$ = "? extends " + $3;
  :} | QUESTION SUPER reference_type_2.t {: 
-     return "? super " + t;
+                                         return new Symbol("? super " + t);
      //$$ = "? super " + $3;
  :}
     ;
 // String
 wildcard_3 = QUESTION URSHIFT {:
-                               return "?>>";
+                               return new Symbol("?>>");
                                //$$ = "?>>";
  :} | QUESTION EXTENDS reference_type_3.t {:
-     return "? extends " + t;
+                                           return new Symbol("? extends " + t);
      //$$ = "? extends " + $3;
  :} | QUESTION SUPER reference_type_3.t {:
-     return "? super " + t;
+                                         return new Symbol("? super " + t);
      //$$ = "? super " + $3;
  :}
     ;
 // String
 reference_type_1 = reference_type.r GT {: 
-                                        return  r.getFullyTypedName() + ">";
+                                        return new Symbol( r.getFullyTypedName() + ">");
                                         //$$ = $1.getFullyTypedName() + ">";
  :} | class_or_interface.c LT type_argument_list_2.t {:
-     return  c.getFullyTypedName() + "<" +  t;
+                                                      return new Symbol( c.getFullyTypedName() + "<" +  t);
      //$$ = $1.getFullyTypedName() + "<" + $3;
  :}
     ;
 // String
 reference_type_2 = reference_type.r RSHIFT {: 
-                                            return  r.getFullyTypedName() + ">>";
+                                            return new Symbol( r.getFullyTypedName() + ">>");
                                             //$$ = $1.getFullyTypedName() + ">>";
  :} | class_or_interface.c LT type_argument_list_3.t {:
-     return  c.getFullyTypedName() + "<" +  t;
+                                                      return new Symbol( c.getFullyTypedName() + "<" +  t);
      //$$ = $1.getFullyTypedName() + "<" + $3;
  :}
     ;
 // String
 reference_type_3 = reference_type.r URSHIFT {:
-                                             return  r.getFullyTypedName() + ">>>";
+                                             return new Symbol( r.getFullyTypedName() + ">>>");
                                              //$$ = $1.getFullyTypedName() + ">>>";
  :}
     ;
 // String
 type_argument_list = type_argument.t {:
-                                      return  t;
+                                      return new Symbol( t);
                                       //$$ = $1;
  :}
  | type_argument_list.l COMMA type_argument.a {:
-     return  l + ", " +  a;
+                                               return new Symbol( l + ", " +  a);
      //$$ = $1 + ", " + $3;
  :}
     ;
 // String
 type_argument_list_1 = type_argument_1
  | type_argument_list.t_list COMMA type_argument_1.t1 {:
-                                                       return t_list + ", " + t1;
+                                                       return new Symbol(t_list + ", " + t1);
                                                        //$$ = $1 + ", " + $3;
  :}
     ;
 // String
 type_argument_list_2 = type_argument_2
  | type_argument_list.t_list COMMA type_argument_2.t2 {:
-                                                       return t_list + ", " + t2;
+                                                       return new Symbol(t_list + ", " + t2);
                                                        //$$ = $1 + ", " + $3;
  :}
     ;
 // String
 type_argument_list_3 = type_argument_3
  | type_argument_list.t_list COMMA type_argument_3.t3 {:
-                                                       return t_list + ", " + t3;
+                                                       return new Symbol(t_list + ", " + t3);
                                                        //$$ = $1 + ", " + $3;
  :}
     ;
 // String
 type_argument = reference_type.r {:
-                                  return r.getFullyTypedName();
+                                  return new Symbol(r.getFullyTypedName());
                                   //$$ = $1.getFullyTypedName();
  :}
  | wildcard
@@ -336,7 +329,7 @@ modifiers_opt = modifiers | modifiers_none
 modifiers = modifier.mod {:
                       ArrayList result = new ArrayList<Object>();
                       //$$ = new ArrayList<Object>();
-                      return (List)result.add(mod);
+                          return new Symbol((List)result.add(mod));
                       //$<List>$.add($1);
  :}
  | modifiers.mods modifier.mod {:
@@ -349,86 +342,86 @@ modifiers_none = {: $$ = new ArrayList<Object>(); :}
     ;
 // Object
 modifier = PUBLIC {:
-                   return Modifier.PUBIC;
+                   return new Symbol(Modifier.PUBIC);
                    //$$ = Modifier.PUBLIC;
                    :}
     | PROTECTED {:
-        return Modifier.PROTECTED;
+                 return new Symbol(Modifier.PROTECTED);
         //$$ = Modifier.PROTECTED;
         :}
     | PRIVATE {:
-        return Modifier.PRIVATE;
+               return new Symbol(Modifier.PRIVATE);
         //$$ = Modifier.PRIVATE;
         :}
     | STATIC {:
-        return Modifier.STATIC;
+              return new Symbol(Modifier.STATIC);
         //$$ = Modifier.STATIC;
         :}
     | ABSTRACT {:
-        return Modifier.ABSTRACT;
+                return new Symbol(Modifier.ABSTRACT);
         //$$ = Modifier.ABSTRACT; :} 
     | FINAL {:
-        return Modifier.FINAL;
+                              return new Symbol(Modifier.FINAL);
         //$$ = Modifier.FINAL; :}
     | NATIVE {:
-        return Modifier.NATIVE;
+                              return new Symbol(Modifier.NATIVE);
         //$$ = Modifier.NATIVE;
         :}
  | SYNCHRONIZED {:
-     return Modifier.SYNCHRONIZED;
+            return new Symbol(Modifier.SYNCHRONIZED);
      //$$ = Modifier.SYNCHRONIZED;
      :}
  | TRANSIENT {:
-     return Modifier.TRANSIENT;
+         return new Symbol(Modifier.TRANSIENT);
      //$$ = Modifier.TRANSIENT;
      :}
  | VOLATILE {:
-     return Modifier.VOLATILE;
+         return new Symbol(Modifier.VOLATILE);
      //$$ = Modifier.VOLATILE;
     :}
  | STRICTFP {:
-             return Modifier.STRICTFP;
+         return new Symbol(Modifier.STRICTFP);
              //$$ = Modifier.STRICTFP;
      :}
  | annotation.a {:
-                 return a;
+                 return new Symbol(a);
      //$$ = $1;
     :}
     ;
 // String
 name = IDENTIFIER.id {:
-                   return id;
+                      return new Symbol(id);
                    //$$ = $1;
                    :}                  // Foo (or foo)
  | name.n DOT IDENTIFIER.id {:
-                             return n + ". " + id;
+                             return new Symbol(n + ". " + id);
                              //$$ = $1 + "." + $3;
     :}  // foo.Foo 
     ;
 // String -- we do not use this for any info
 dims = LBRACK RBRACK {: 
-                      return new ArrayTypeNode();
+                      return new Symbol(new ArrayTypeNode());
                       // $$ = new ArrayTypeNode();
  :} | dims.d LBRACK RBRACK {: 
-     return new ArrayTypeNode(d);
+                            return new Symbol(new ArrayTypeNode(d));
      //$$ = new ArrayTypeNode($1);
  :}
     ;
 // List<TypeNode>
 throws = THROWS class_type_list.c_list {:
-                                        return c_list;
+                                        return new Symbol(c_list);
                                         //$$ = $2;
                                         :} 
  | /* none */ {:
-    return new ArrayList<TypeNode>();
+               return new Symbol(new ArrayList<TypeNode>());
     //$$ = new ArrayList<TypeNode>();
     :}
     ;
 // List<TypeNode>
 class_type_list = class_type.c {:
                                 List val = new ArrayList<TypeNode>();
-                                return (List)val.add(c);
-                                //return val;
+                                return new Symbol((List)val.add(c));
+                                //return new Symbol(val;
                                 //$$ = new ArrayList<TypeNode>();
                                 // $<List>$.add($1);
                                :}
@@ -439,7 +432,7 @@ class_type_list = class_type.c {:
     ;
 // MethodSignatureNode
 method_declarator = IDENTIFIER.id LPAREN formal_parameter_list_opt.l RPAREN {:
-                                                                             return new MethodSignatureNode(id, l);
+                                                                             return new Symbol(new MethodSignatureNode(id, l));
                                                                              //$$ = new MethodSignatureNode($1, $3);
                   :}
     ;
@@ -447,7 +440,7 @@ method_declarator = IDENTIFIER.id LPAREN formal_parameter_list_opt.l RPAREN {:
 // List<ParameterNode>
 formal_parameter_list_opt = formal_parameter_list 
     | /* none */ {:
-                  return new ArrayList<ParameterNode>();
+                  return new Symbol(new ArrayList<ParameterNode>());
                   //$$ = new ArrayList<ParameterNode>();
                   :}
 ;
@@ -457,7 +450,7 @@ formal_parameter_list = formal_parameter.f {:
                                           //list.add($1);
                                             list.add(f);
                                             //$$ = list;
-                                            return list;
+                                            return new Symbol(list);
                                           :}
     | formal_parameter_list.f_list COMMA formal_parameter.f {:
                                                              f_list.add(f);
@@ -466,157 +459,158 @@ formal_parameter_list = formal_parameter.f {:
 ;
 // ParameterNode
 formal_parameter = type.t variable_declarator_id.v_id {:
-                                                       return new ParameterNode(t, v_id);
+                                                       return new Symbol(new ParameterNode(t, v_id));
                                                        //$$ = new ParameterNode($1, $2);
                  :}
                  | type.t {:
-                         return new ParameterNode(t, null);
+                           return new Symbol(new ParameterNode(t, null));
                      //$$ = new ParameterNode($1, null);
                  :}
                  | FINAL type.t variable_declarator_id.v_id {:
-                     return new ParameterNode(t, v_id, true);
+                                                             return new Symbol(new ParameterNode(t, v_id, true));
                      //$$ = new ParameterNode($2, $3, true);
                  :}
                  | FINAL type.t {:
-                     return new ParameterNode(t, null, true);
+                                 return new Symbol(new ParameterNode(t, null, true));
                      //$$ = new ParameterNode($2, null, true);
                  :}
                  | type.t ELLIPSIS IDENTIFIER.id {:
-                                             return new ParameterNode(t, id, false, true);
+                                                  return new Symbol(new ParameterNode(t, id, false, true));
                                                   //$$ = new ParameterNode($1, $3, false, true);
                  :}
                  | type.t ELLIPSIS {:
-                                    return new ParameterNode(t, null, false, true);
+                                    return new Symbol(new ParameterNode(t, null, false, true));
                      //$$ = new ParameterNode($1, null, false, true);
                  :}
                  | FINAL type.t ELLIPSIS IDENTIFIER.id {:
-                     return new ParameterNode(t, id, true, true);
+                                                        return new Symbol(new ParameterNode(t, id, true, true));
                      //$$ = new ParameterNode($2, $4, true, true);
                  :}
                  | FINAL type.t ELLIPSIS {:
-                                        return new ParameterNode(t, null, true, true);
+                                          return new Symbol(new ParameterNode(t, null, true, true));
                                         //$$ = new ParameterNode($2, null, true, true);
                                         :}
     ;
 // String
 variable_declarator_id = IDENTIFIER.id {:
-                                        return id;
+                                        return new Symbol(id);
                                      //$$ = $1;
  :} | variable_declarator_id.v LBRACK RBRACK {:
      // We know this is always preceeded by 'type' production.
      //how to accesss $0 in beaver
      //$<Object>0 = new ArrayTypeNode($<TypeNode>0); 
-     return v;
+                                              return new Symbol(v);
      //$$ = $1;
  :}
     ;
 // String
 type_parameter_list = type_parameter_list.l COMMA type_parameter.p {:
-                                                                    return l +", " + p;
+                                                                    return new Symbol(l +", " + p);
                                                                 //$$ = $1 + ", " + $3;
  :} | type_parameter
      ;
 // String
 type_parameter_list_1 = type_parameter_1
  | type_parameter_list.l COMMA type_parameter_1.p1 {:
-                                                    return l + ", " + p1;
+                                                    return new Symbol(l + ", " + p1);
                                                     //$$ = $1 + ", " + $3;
  :}
     ;
 // String
 type_parameter = type_variable.v type_bound_opt.b {:
-                                                   return v + b;
+                                                   return new Symbol(v + b);
                                                    //$$ = $1 + $2;
  :}
     ;
 // String
 type_parameter_1 = type_variable.t GT {: 
-                                     return t + ">";
+                                       return new Symbol(t + ">");
                                      //$$ = $1 + ">"; 
  :}
  | type_variable.t type_bound_1.b {:
-                                   return t + b;
+                                   return new Symbol(t + b);
                                    //$$ = $1 + $2;
  :}
     ;
 // String
 type_bound_1 = EXTENDS reference_type_1.r {: 
-                                         return " extends " + r;
+                                           return new Symbol(" extends " + r);
                                          //$$ = " extends " + $1;
  :}
  | EXTENDS reference_type.r additional_bound_list_1.a {: 
-     return " extends " + r.getFullyTypedName() + a;
+                                                       return new Symbol(" extends " + r.getFullyTypedName() + a);
      //$$ = " extends " + $2.getFullyTypedName() + $3;
  :}
     ;
 // String
 type_bound_opt = type_bound 
  | none {:
-         return "";
+         return new Symbol("");
          //$$ = "";
  :}
     ;
 // String
 type_bound = EXTENDS reference_type.r additional_bound_list_opt.a {: 
-                                                               return "extends " + r.getFullyTypedName() + a;
+                                                                   return new Symbol("extends " + r.getFullyTypedName() + a);
                                                                //$$ = "extends " + $2.getFullyTypedName() + $3;
  :}
     ;
 // String
 additional_bound_list_opt = additional_bound_list 
  | none {:
-         return "";
+         return new Symbol("");
          //$$ = "";
  :}
     ;
 // String
 additional_bound_list = additional_bound.a additional_bound_list.b {:
-                                                                return a + b;
+                                                                    return new Symbol(a + b);
                                                                 //$$ = $1 + $2;
  :} | additional_bound
      ;
 // String
 additional_bound_list_1 = additional_bound.a additional_bound_list_1.b {:
-                                                                        return a + b;
+                                                                        return new Symbol(a + b);
                                                                         //$$ = $1 + $2;
  :}
  | AND reference_type_1.t {: 
-     return " & " + t;
+                           return new Symbol(" & " + t);
      //$$ = " & " + $1;
  :}
     ;
 // String
 additional_bound = AND interface_type.t {: 
-                                       return " & " + t.getFullyTypedName();
+                                         return new Symbol(" & " + t.getFullyTypedName());
                                        //$$ = " & " + $2.getFullyTypedName();
 :}
     ;
-    none = {:
-            return null;
+                                         none = {:
+                                                 return new Symbol(null);
             //$$ = null; :}
         ;
-            constructor_declaration = modifiers_opt.m constructor_declarator.d throws.t {:
+
+constructor_declaration = modifiers_opt.m constructor_declarator.d throws.t {:
                                                                        //$$ = $2;
-                                                                       ConstrcuctorSignatureNode result = d;
+                                                                       ConstructorSignatureNode result = d;
                                                                        //$<ConstructorSignatureNode>$.setModifiers($1);
                                                                        result.setModifiers(m);
                                                                        //$<ConstructorSignatureNode>$.setThrows($3);
                                                                        result.setThrows(t);
-                                                                       return result;
+                                                                             return new Symbol(result);
  :} | modifiers_opt.m LT type_parameter_list_1.l constructor_declarator.d throws.t {:
      //$$ = $4;
-     ConstrcuctorSignatureNode result = d;
+     ConstructorSignatureNode result = d;
      //$<ConstructorSignatureNode>$.setModifiers($1);
      result.setModifiers(m);
      //$<ConstructorSignatureNode>$.setExtraTypeInfo("<" + $3);
      result.setExtraTypeInfo("<" + l);
      //$<ConstructorSignatureNode>$.setThrows($5);
      result.setThrows(t);
-     return result;
+     return new Symbol(result);
      :}
     ;
 constructor_declarator = name.n LPAREN formal_parameter_list_opt.p RPAREN {:
-                                                                       return new ConstructorSignatureNode(n, p);
+                                                                           return new Symbol(new ConstructorSignatureNode(n, p));
                                                                        //$$ = new ConstructorSignatureNode($1, $3);
  :}
     ;
@@ -629,7 +623,7 @@ method_header = modifiers_opt.m type.p method_declarator.d throws.t {:
                                                                      result.setReturnType(p);
                                                                      //$<MethodSignatureNode>$.setThrows($4);
                                                              result.setThrows(t);
-                                                             return result;
+                                                                     return new Symbol(result);
               :}
               | modifiers_opt.m LT type_parameter_list_1.l type.p method_declarator.d throws.t {:
                   //$$ = $5;
@@ -642,7 +636,7 @@ method_header = modifiers_opt.m type.p method_declarator.d throws.t {:
                   result.setReturnType(p);
                   //$<MethodSignatureNode>$.setThrows($6);
                   result.setThrows(t);
-                  return result;
+                  return new Symbol(result);
               :}
               | modifiers_opt.m VOID method_declarator.d throws.t {:
                   //$$ = $3;
@@ -653,7 +647,7 @@ method_header = modifiers_opt.m type.p method_declarator.d throws.t {:
                   result.setReturnType(PrimitiveTypeNode.VOID);
                   //$<MethodSignatureNode>$.setThrows($4);
                   result.setThrows(t);
-                  return result;
+                  return new Symbol(result);
               :}
               | modifiers_opt.m LT type_parameter_list_1.l VOID method_declarator.d throws.t {:
                                                                                             
@@ -667,32 +661,32 @@ method_header = modifiers_opt.m type.p method_declarator.d throws.t {:
                   //$<MethodSignatureNode>$.setReturnType(PrimitiveTypeNode.VOID);
                   result.setThrows(t);
                   //$<MethodSignatureNode>$.setThrows($6);
-                  return result();
+                  return new Symbol(result());
                :}
     ;
 // Annotation
 annotation = annotation_name.a {:
-                              return new Annotation(a, new ArrayList<AnnotationParameter>());
+                                return new Symbol(new Annotation(a, new ArrayList<AnnotationParameter>()));
                               //$$ = new Annotation($1, new ArrayList<AnnotationParameter>());
            :}
            | annotation_name.a LPAREN annotation_params_opt.p RPAREN {:
-               return new Anntation(a,p);
+                                                                      return new Symbol(new Anntation(a,p));
                //$$ = new Annotation($1, $3);
            :}
     ;
 // String
 annotation_name = AT.at name.n {:
                            //$$ = $1 + $2;
-                                return (at + n);
+                                return new Symbol((at + n));
                           :}
     ;
 // AnnotationParam
 annotation_param = type_variable.t EQUAL annotation_value.a {:
-                                                             return new AnnotationParameter(t,a);
+                                                             return new Symbol(new AnnotationParameter(t,a));
                                                              //$$ = new AnnotationParameter($1, $3);
                  :}
                  | annotation_value.a {:
-                                       return new DefaultAnnotationParameter(a);
+                                       return new Symbol(new DefaultAnnotationParameter(a));
                                        // $$ = new DefaultAnnotationParameter($1);
                  :}
     ;
@@ -700,7 +694,7 @@ annotation_param = type_variable.t EQUAL annotation_value.a {:
 annotation_params = annotation_param.p {:
                                       ArrayList result = new ArrayList<AnnotationParameter>();
                                       //$$ = new ArrayList<AnnotationParameter>();
-                                      return (List)result.add(p);
+                                        return new Symbol((List)result.add(p));
                                       //$<List>$.add($1);
                   :}
                   | annotation_params.a COMMA annotation_param.p {:
@@ -710,23 +704,23 @@ annotation_params = annotation_param.p {:
     ;
 // AnnotationExpression
 annotation_value = annotation {:
-                               return (AnnotationExpression)l;
+                               return new Symbol((AnnotationExpression)l);
                                //$$ = $<AnnotationExpression>1;
                  :}
                  | type.t {:
-                     return (AnnotationExpression)l;
+                           return new Symbol((AnnotationExpression)l);
                      //$$ = $<AnnotationExpression>1;
                  :}
                  | literal.l {:
-                    return (AnnotationExpression)l;
+                              return new Symbol((AnnotationExpression)l);
                      $$ = $<AnnotationExpression>1;
                  :}
                  | LCURLY annotation_array_values.v RCURLY {:
-                     return new ArrayAnnotationExpression(v);
+                                                            return new Symbol(new ArrayAnnotationExpression(v));
                      // $$ = new ArrayAnnotationExpression($2);
                  :}
                  | LCURLY RCURLY {:
-                     return new ArrayAnnotationExpression(new ArrayList<AnnotationExpression>());
+                                  return new Symbol(new ArrayAnnotationExpression(new ArrayList<AnnotationExpression>()));
                      // $$ = new ArrayAnnotationExpression(new ArrayList<AnnotationExpression>());
                  :}
     ;
@@ -734,8 +728,8 @@ annotation_value = annotation {:
 annotation_array_values = annotation_value.a {:
                                   ArrayList result = new ArrayList<AnnotationExpression>();
                                               //$$ = new ArrayList<AnnotationExpression>();
-                                              return (List)result.add(a);
-                                              //return result;
+                                              return new Symbol((List)result.add(a));
+                                              //return new Symbol(result;
                                               //$<List>$.add($1);
                         :}
                         | annotation_array_values.a COMMA annotation_value.v {:
@@ -744,7 +738,7 @@ annotation_array_values = annotation_value.a {:
                         :}
     ;
 // List<AnnotationParameter> -- This is just so we don't deal with null's.
-annotation_params_none = {: return new ArrayList<AnnotationParameter>();
+                                              annotation_params_none = {: return new Symbol(new ArrayList<AnnotationParameter>());
                             //$$ = new ArrayList<AnnotationParameter>();
                          :}
     ;
@@ -752,11 +746,11 @@ annotation_params_none = {: return new ArrayList<AnnotationParameter>();
 annotation_params_opt = annotation_params | annotation_params_none
     ;
 literal = STRING_LITERAL.s {:
-                          return new StringLiteral(s);
+                            return new Symbol(new StringLiteral(s));
                           // $$ = new StringLiteral($1);
                           :}
         | CHARACTER_LITERAL.c {:
-            return new CharacterLiteral(c);
+                               return new Symbol(new CharacterLiteral(c));
             //$$ = new CharacterLiteral($1);
         :}
 

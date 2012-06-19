@@ -1,0 +1,527 @@
+Buildfile: /home/chaitanya/projects/jruby/build.xml
+
+init:
+
+prepare-bin-jruby:
+
+jar:
+
+init:
+
+create-dirs:
+
+copy-resources:
+
+update-constants:
+     [echo] Updating Constants.java
+     [echo] ...using git revision = e9a97ea, tzdata = 2011n
+     [copy] Copying 1 file to /home/chaitanya/projects/jruby/src_gen/org/jruby/runtime
+
+_uc_internal_:
+
+prepare:
+
+compile-annotation-binder:
+
+compile-jruby:
+      [apt] Since compiler setting isn't classic or modern, ignoring fork setting.
+      [apt] Since compiler setting isn't classic or modern, ignoring fork setting.
+      [apt] Compiling 2 source files to /home/chaitanya/projects/jruby/build/classes/jruby
+      [apt] Since compiler setting isn't classic or modern, ignoring fork setting.
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:131: cannot find symbol
+      [apt] symbol  : method nextToken(org.jruby.lexer.JavaSignatureBeaverLexer)
+      [apt] location: class org.jruby.parser.JavaSignatureBeaverParser
+      [apt]             return (SignatureNode) parser.nextToken(JavaSignatureBeaverLexer.create(in));
+      [apt]                                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:137: cannot find symbol
+      [apt] symbol  : constructor Parser(beaver.ParsingTables)
+      [apt] location: class org.jruby.parser.Parser
+      [apt] 		super(PARSING_TABLES);
+      [apt] 		^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:144: cannot find symbol
+      [apt] symbol  : constructor SignatureNode(org.jruby.ast.java_signature.MethodSignatureNode)
+      [apt] location: class org.jruby.ast.java_signature.SignatureNode
+      [apt]                          return new SignatureNode(m);
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:151: cannot find symbol
+      [apt] symbol: variable m
+      [apt]                                    return new SignatureNode(m);
+      [apt]                                                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:151: internal error; cannot instantiate org.jruby.ast.java_signature.SignatureNode.<init> at org.jruby.ast.java_signature.SignatureNode to ()
+      [apt]                                    return new SignatureNode(m);
+      [apt]                                           ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:161: cannot find symbol
+      [apt] symbol  : constructor TypeNode(org.jruby.ast.java_signature.TypeNode)
+      [apt] location: class org.jruby.ast.java_signature.TypeNode
+      [apt]                                           return new TypeNode((TypeNode)r);
+      [apt]                                                  ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:168: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.PrimitiveTypeNode
+      [apt] required: beaver.Symbol
+      [apt]         return PrimitiveTypeNode.BYTE;
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:175: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.PrimitiveTypeNode
+      [apt] required: beaver.Symbol
+      [apt]         return PrimitiveTypeNode.SHORT;
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:182: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.PrimitiveTypeNode
+      [apt] required: beaver.Symbol
+      [apt]         return PrimitiveTypeNode.INT;
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:189: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.PrimitiveTypeNode
+      [apt] required: beaver.Symbol
+      [apt]         return PrimitiveTypeNode.LONG;
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:196: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.PrimitiveTypeNode
+      [apt] required: beaver.Symbol
+      [apt]         return PrimitiveTypeNode.CHAR;
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:203: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.PrimitiveTypeNode
+      [apt] required: beaver.Symbol
+      [apt]         return PrimitiveTypeNode.BOOLEAN;
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:210: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.PrimitiveTypeNode
+      [apt] required: beaver.Symbol
+      [apt]         return PrimitiveTypeNode.FLOAT;
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:217: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.PrimitiveTypeNode
+      [apt] required: beaver.Symbol
+      [apt]         return PrimitiveTypeNode.DOUBLE;
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:226: cannot find symbol
+      [apt] symbol  : constructor ReferenceTypeNode(org.jruby.ast.java_signature.ReferenceTypeNode)
+      [apt] location: class org.jruby.ast.java_signature.ReferenceTypeNode
+      [apt]                                             return new ReferenceTypeNode(c);
+      [apt]                                                    ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:235: cannot find symbol
+      [apt] symbol: variable r
+      [apt]                   return new ReferenceTypeNode((ReferenceTypeNode)r);
+      [apt]                                                                   ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:235: cannot find symbol
+      [apt] symbol  : constructor ReferenceTypeNode(org.jruby.ast.java_signature.ReferenceTypeNode)
+      [apt] location: class org.jruby.ast.java_signature.ReferenceTypeNode
+      [apt]                   return new ReferenceTypeNode((ReferenceTypeNode)r);
+      [apt]                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:244: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                return new String(id);
+      [apt]                                       ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:253: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ReferenceTypeNode
+      [apt] required: beaver.Symbol
+      [apt]                              return new ReferenceTypeNode(n);
+      [apt]                                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:268: cannot find symbol
+      [apt] symbol: class ReferenceType
+      [apt]      ReferenceType result = c;
+      [apt]      ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:289: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ReferenceTypeNode
+      [apt] required: beaver.Symbol
+      [apt]                                                return result;
+      [apt]                                                       ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:303: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ArrayTypeNode
+      [apt] required: beaver.Symbol
+      [apt]                                       return d;
+      [apt]                                              ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:314: cannot find symbol
+      [apt] symbol  : method setTypeOfArray(org.jruby.ast.java_signature.ReferenceTypeNode)
+      [apt] location: class org.jruby.ast.java_signature.ArrayTypeNode
+      [apt]      d.setTypeOfArray(new ReferenceTypeNode(n));
+      [apt]       ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:316: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ArrayTypeNode
+      [apt] required: beaver.Symbol
+      [apt]      return d;
+      [apt]             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:335: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ArrayTypeNode
+      [apt] required: beaver.Symbol
+      [apt]      return d;
+      [apt]             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:352: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ArrayTypeNode
+      [apt] required: beaver.Symbol
+      [apt]      return d;
+      [apt]             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:359: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                      return "?";
+      [apt]                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:368: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return "? extends " + t.getFullyTypedName();
+      [apt]                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:377: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return "? super " +  t.getFullyTypedName();
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:384: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                           return "?>";
+      [apt]                                  ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:393: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return "? extends " + t;
+      [apt]                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:402: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return "? super " + t ;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:409: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                               return "?>>";
+      [apt]                                      ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:418: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return "? extends " + t;
+      [apt]                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:427: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return "? super " + t;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:434: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                return "?>>";
+      [apt]                                       ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:443: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return "? extends " + t;
+      [apt]                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:452: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return "? super " + t;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:461: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                         return  r.getFullyTypedName() + ">";
+      [apt]                                                                       ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:472: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return  c.getFullyTypedName() + "<" +  t;
+      [apt]                                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:481: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                             return  r.getFullyTypedName() + ">>";
+      [apt]                                                                           ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:492: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return  c.getFullyTypedName() + "<" +  t;
+      [apt]                                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:501: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                              return  r.getFullyTypedName() + ">>>";
+      [apt]                                                                            ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:510: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                       return  t;
+      [apt]                                               ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:521: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return  l + ", " +  a;
+      [apt]                       ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:533: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                        return t_list + ", " + t1;
+      [apt]                                                                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:545: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                        return t_list + ", " + t2;
+      [apt]                                                                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:557: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                        return t_list + ", " + t3;
+      [apt]                                                                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:566: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                   return r.getFullyTypedName();
+      [apt]                                                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:586: inconvertible types
+      [apt] found   : boolean
+      [apt] required: java.util.List
+      [apt]                       return (List)result.add(mod);
+      [apt]                                              ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:603: cannot find symbol
+      [apt] symbol: variable $$
+      [apt] 					 $$ = new ArrayList<Object>();
+      [apt] 					 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:609: cannot find symbol
+      [apt] symbol  : variable PUBIC
+      [apt] location: class org.jruby.ast.java_signature.Modifier
+      [apt]                    return Modifier.PUBIC;
+      [apt]                                   ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:616: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]         return Modifier.PROTECTED;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:623: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]         return Modifier.PRIVATE;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:630: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]         return Modifier.STATIC;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:637: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]         return Modifier.ABSTRACT;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:644: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]         return Modifier.FINAL;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:651: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]         return Modifier.NATIVE;
+      [apt]                        ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:658: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]      return Modifier.SYNCHRONIZED;
+      [apt]                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:665: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]      return Modifier.TRANSIENT;
+      [apt]                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:672: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]      return Modifier.VOLATILE;
+      [apt]                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:679: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Modifier
+      [apt] required: beaver.Symbol
+      [apt]              return Modifier.STRICTFP;
+      [apt]                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:688: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.Annotation
+      [apt] required: beaver.Symbol
+      [apt]                  return a;
+      [apt]                         ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:697: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                    return id;
+      [apt]                           ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:708: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                              return n + ". " + id;
+      [apt]                                              ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:715: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ArrayTypeNode
+      [apt] required: beaver.Symbol
+      [apt]                       return new ArrayTypeNode();
+      [apt]                              ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:724: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ArrayTypeNode
+      [apt] required: beaver.Symbol
+      [apt]      return new ArrayTypeNode(d);
+      [apt]             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:733: incompatible types
+      [apt] found   : java.util.List
+      [apt] required: beaver.Symbol
+      [apt]                                         return c_list;
+      [apt]                                                ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:740: incompatible types
+      [apt] found   : java.util.ArrayList<org.jruby.ast.java_signature.TypeNode>
+      [apt] required: beaver.Symbol
+      [apt]     return new ArrayList<TypeNode>();
+      [apt]            ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:750: inconvertible types
+      [apt] found   : boolean
+      [apt] required: java.util.List
+      [apt]                                 return (List)val.add(c);
+      [apt]                                                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:774: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.MethodSignatureNode
+      [apt] required: beaver.Symbol
+      [apt]                                                                              return new MethodSignatureNode(id, l);
+      [apt]                                                                                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:782: incompatible types
+      [apt] found   : java.util.ArrayList<org.jruby.ast.java_signature.ParameterNode>
+      [apt] required: beaver.Symbol
+      [apt]                   return new ArrayList<ParameterNode>();
+      [apt]                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:795: incompatible types
+      [apt] found   : java.util.List<org.jruby.ast.java_signature.ParameterNode>
+      [apt] required: beaver.Symbol
+      [apt]                                             return list;
+      [apt]                                                    ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:816: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ParameterNode
+      [apt] required: beaver.Symbol
+      [apt]                                                        return new ParameterNode(t, v_id);
+      [apt]                                                               ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:825: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ParameterNode
+      [apt] required: beaver.Symbol
+      [apt]                          return new ParameterNode(t, null);
+      [apt]                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:836: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ParameterNode
+      [apt] required: beaver.Symbol
+      [apt]                      return new ParameterNode(t, v_id, true);
+      [apt]                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:845: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ParameterNode
+      [apt] required: beaver.Symbol
+      [apt]                      return new ParameterNode(t, null, true);
+      [apt]                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:856: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ParameterNode
+      [apt] required: beaver.Symbol
+      [apt]                                              return new ParameterNode(t, id, false, true);
+      [apt]                                                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:865: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ParameterNode
+      [apt] required: beaver.Symbol
+      [apt]                                     return new ParameterNode(t, null, false, true);
+      [apt]                                            ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:876: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ParameterNode
+      [apt] required: beaver.Symbol
+      [apt]                      return new ParameterNode(t, id, true, true);
+      [apt]                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:885: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ParameterNode
+      [apt] required: beaver.Symbol
+      [apt]                                         return new ParameterNode(t, null, true, true);
+      [apt]                                                ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:894: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                         return id;
+      [apt]                                                ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:906: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return v;
+      [apt]             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:917: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                                     return l +", " + p;
+      [apt]                                                                                    ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:930: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                     return l + ", " + p1;
+      [apt]                                                                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:941: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                    return v + b;
+      [apt]                                                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:950: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                      return t + ">";
+      [apt]                                               ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:961: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                    return t + b;
+      [apt]                                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:970: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                          return " extends " + r;
+      [apt]                                                             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:981: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return " extends " + r.getFullyTypedName() + a;
+      [apt]                                                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:989: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]          return "";
+      [apt]                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1000: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                                return "extends " + r.getFullyTypedName() + a;
+      [apt]                                                                                                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1008: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]          return "";
+      [apt]                 ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1019: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                                 return a + b;
+      [apt]                                                                          ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1031: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                                                         return a + b;
+      [apt]                                                                                  ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1040: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]      return " & " + t;
+      [apt]                   ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1049: incompatible types
+      [apt] found   : java.lang.String
+      [apt] required: beaver.Symbol
+      [apt]                                        return " & " + t.getFullyTypedName();
+      [apt]                                                     ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1075: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ConstructorSignatureNode
+      [apt] required: beaver.Symbol
+      [apt]                                                                        return result;
+      [apt]                                                                               ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1097: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ConstructorSignatureNode
+      [apt] required: beaver.Symbol
+      [apt]      return result;
+      [apt]             ^
+      [apt] /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java:1107: incompatible types
+      [apt] found   : org.jruby.ast.java_signature.ConstructorSignatureNode
+      [apt] required: beaver.Symbol
+      [apt]                                                                        return new ConstructorSignatureNode(n, p);
+      [apt]                                                                               ^
+      [apt] Note: /home/chaitanya/projects/jruby/src/org/jruby/parser/JavaSignatureBeaverParser.java uses unchecked or unsafe operations.
+      [apt] Note: Recompile with -Xlint:unchecked for details.
+      [apt] 100 errors

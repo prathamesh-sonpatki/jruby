@@ -13,47 +13,18 @@ import org.jruby.parser.JavaSignatureBeaverParser.Terminals;
 %function nextToken
 %type Symbol
 %yylexthrow Scanner.Exception
-%eofval {
+%eofval{
           return new Symbol(Terminals.EOF, "end-of-file");
-%eofval }
+%eofval}
 %standalone
 %unicode
 %line
 %column
 %{
-  boolean stringResult = false;
-  boolean characterResult = false;
-  StringBuilder stringBuf = new StringBuilder();
-
-  public Object value() {
-    if (stringResult) {
-        stringResult = false;
-        String value = stringBuf.toString();
-        stringBuf.setLength(0);
-        return value;
-    } else if (characterResult) {
-        characterResult = false;
-        String value = stringBuf.toString();
-        if (stringBuf.length() != 1) throw new Error("Character not on char ("+ value +")");
-        stringBuf.setLength(0);
-        return value;
-    }
-    return yytext();
-  }
-
-  public static JavaSignatureBeaverLexer create(java.io.InputStream stream) {
+   public static JavaSignatureBeaverLexer create(java.io.InputStream stream) {
     return new JavaSignatureBeaverLexer(stream);
   }
 
-  private Symbol newToken(short id)
-  {
-    return new Symbol(id, yyline + 1, yycolumn + 1, yylength());
-  }
-
-  private Symbol newToken(short id, Object value)
-  {
-    return new Symbol(id, yyline + 1, yycolumn + 1, yylength(), value);
-  }
 
 %}
 
@@ -76,27 +47,27 @@ Identifier     = [:jletter:] [:jletterdigit:]*
 <YYINITIAL> {
     // primitive types
     "boolean"       { return newToken(Terminals.BOOLEAN);      }
-    "byte"          { return return newToken(Terminals.BYTE);         }
-    "short"         { return return newToken(Terminals.SHORT);        }
-    "int"           { return return newToken(Terminals.INT);          }
-    "long"          { return return newToken(Terminals.LONG);         }
-    "char"          { return return newToken(Terminals.CHAR);         }
-    "float"         { return return newToken(Terminals.FLOAT);        }
-    "double"        { return return newToken(Terminals.DOUBLE);       }
-    "void"          { return return newToken(Terminals.VOID);         }
+    "byte"          { return  newToken(Terminals.BYTE);         }
+    "short"         { return  newToken(Terminals.SHORT);        }
+    "int"           { return  newToken(Terminals.INT);          }
+    "long"          { return  newToken(Terminals.LONG);         }
+    "char"          { return  newToken(Terminals.CHAR);         }
+    "float"         { return  newToken(Terminals.FLOAT);        }
+    "double"        { return  newToken(Terminals.DOUBLE);       }
+    "void"          { return  newToken(Terminals.VOID);         }
 
     // modifiers
-    "public"        { return return newToken(Terminals.PUBLIC);       }
-    "protected"     { return return newToken(Terminals.PROTECTED)   }
-    "private"       { return return newToken(Terminals.PRIVATE);      }
-    "static"        { return return newToken(Terminals.STATIC);       }
-    "abstract"      { return return newToken(Terminals.ABSTRACT);     }
-    "final"         { return return newToken(Terminals.FINAL);        }
-    "native"        { return return newToken(Terminals.NATIVE);       }
-    "synchronized"  { return return newToken(Terminals.SYNCHRONIZED); }
-    "transient"     { return return newToken(Terminals.TRANSIENT);    }
-    "volatile"      { return return newToken(Terminals.VOLATILE);     }
-    "strictfp"      { return return newToken(Terminals.STRICTFP);     }
+    "public"        { return  newToken(Terminals.PUBLIC);       }
+    "protected"     { return  newToken(Terminals.PROTECTED);   }
+    "private"       { return  newToken(Terminals.PRIVATE);      }
+    "static"        { return  newToken(Terminals.STATIC);       }
+    "abstract"      { return  newToken(Terminals.ABSTRACT);     }
+    "final"         { return  newToken(Terminals.FINAL);        }
+    "native"        { return  newToken(Terminals.NATIVE);       }
+    "synchronized"  { return  newToken(Terminals.SYNCHRONIZED); }
+    "transient"     { return  newToken(Terminals.TRANSIENT);    }
+    "volatile"      { return  newToken(Terminals.VOLATILE);     }
+    "strictfp"      { return  newToken(Terminals.STRICTFP);     }
 
     "@"             { return newToken(Terminals.AT);           }
     "&"             { return newToken(Terminals.AND);          }
@@ -114,11 +85,11 @@ Identifier     = [:jletter:] [:jletterdigit:]*
     "?"             { return newToken(Terminals.QUESTION);     }
     "<"             { return newToken(Terminals.LT);           }
     ">"             { return newToken(Terminals.GT);           }
-    "throws"        { return newToken(Terminals.THROWS));       }
-    "extends"       { return newToken(Terminals.EXTENDS));      }
-    "super"         { return newToken(Terminals.SUPER));        }
-    ">>"            { return newToken(Terminals.RSHIFT));       }
-    ">>>"           { return newToken(Terminals.URSHIFT));      }
+    "throws"        { return newToken(Terminals.THROWS);       }
+    "extends"       { return newToken(Terminals.EXTENDS);      }
+    "super"         { return newToken(Terminals.SUPER);        }
+    ">>"            { return newToken(Terminals.RSHIFT);       }
+    ">>>"           { return newToken(Terminals.URSHIFT);      }
 
     {Identifier}    { return newToken(Terminals.IDENTIFIER);   }
     \"              { yybegin(STRING); } 

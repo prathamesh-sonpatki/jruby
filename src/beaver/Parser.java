@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * This file is part of Beaver Parser Generator.                       *
+ * This file is part of Beaver BeaverParser Generator.                       *
  * Copyright (C) 2003,2004 Alexander Demenchuk <alder@softanvil.com>.  *
  * All rights reserved.                                                *
  * See the file "LICENSE" for the terms and conditions for copying,    *
@@ -14,7 +14,7 @@ import java.io.IOException;
  * Almost complete implementation of a LALR parser. Two components that it lacks to parse a concrete
  * grammar -- rule actions and parsing tables -- are provided by a generated subclass.
  */
-public abstract class Parser
+abstract class BeaverParser
 {
 	static public class Exception extends java.lang.Exception
 	{
@@ -23,7 +23,7 @@ public abstract class Parser
 			super(msg);
 		}
 	}
-	
+
 	/**
 	 * This class "lists" reportable events that might happen during parsing.
 	 */
@@ -142,10 +142,10 @@ public abstract class Parser
 			System.err.println(": Recovered: removed error phrase");
 		}
 	}
-	
+
 	/**
 	 * This class wrapps a Scanner and provides a token "accumulator" for a parsing simulation.
-	 * <p>If a source that is being parsed does not have syntax errors this wrapper only adds 
+	 * <p>If a source that is being parsed does not have syntax errors this wrapper only adds
 	 * one indirection while it delivers the next token. However when parser needs to recover
 	 * from a syntax error this wrapper accumulates tokens shifted by a forward parsing simulation
 	 * and later feeds them to the recovered parser.
@@ -154,48 +154,48 @@ public abstract class Parser
 	{
 		public static final boolean BUFFER = true;
 		public static final boolean FLUSH = false;
-		
+
 		private static final int BUF_SIZE = 4;
 		private static final int IDX_MASK = BUF_SIZE - 1;
-		
+
 		private Scanner  scanner;
 		private Symbol[] buffer;
 		private int      idx_add;
 		private int      idx_get;
 		private int      ix_mark;
-		
+
 		public TokenStream(Scanner scanner)
 		{
 			this.scanner = scanner;
 			this.buffer  = new Symbol[BUF_SIZE];
 			this.ix_mark = -1;
 		}
-		
+
 		public void setMode(boolean buffering)
 		{
 			ix_mark = (buffering ? idx_get : -1);
 		}
-		
+
 		public boolean isBuffering()
 		{
 			return ix_mark >= 0;
 		}
-		
+
 		public boolean isEmpty()
 		{
 			return idx_get == idx_add;
 		}
-		
+
 		public boolean isFull()
 		{
 			return ((idx_add + 1) & IDX_MASK) == (isBuffering() ? ix_mark : idx_get);
 		}
-		
+
 		public int size()
 		{
 			return (idx_add - idx_get + BUF_SIZE) & IDX_MASK;
 		}
-		
+
 		public void enque(Symbol symbol)
 		{
 			if (isFull())
@@ -203,14 +203,14 @@ public abstract class Parser
 			buffer[idx_add++] = symbol;
 			idx_add &= IDX_MASK;
 		}
-		
+
 		public Symbol peek()
 		{
 			if (isEmpty())
 				throw new IllegalStateException ("buffer is empty");
 			return buffer[idx_get];
 		}
-		
+
 		public Symbol deque()
 		{
 			if (isEmpty())
@@ -219,13 +219,13 @@ public abstract class Parser
 			idx_get &= IDX_MASK;
 			return symbol;
 		}
-		
+
 		public TokenStream(Scanner scanner, Symbol first_symbol)
 		{
 			this(scanner);
 			enque(first_symbol);
 		}
-		
+
 		public Symbol nextToken() throws IOException
 		{
 			if (isBuffering())
@@ -235,8 +235,8 @@ public abstract class Parser
 					enque(readToken());
 				}
 				return deque();
-			} 
-			else 
+			}
+			else
 			{
 				return (isEmpty() ? readToken() : deque());
 			}
@@ -252,7 +252,7 @@ public abstract class Parser
 				throw new IllegalStateException ("stream is not buffering");
 			idx_get = ix_mark;
 		}
-		
+
 		/**
 		 * Removes a symbol from the buffer.
 		 */
@@ -262,26 +262,26 @@ public abstract class Parser
 				throw new IllegalStateException ("stream is not buffering");
 			switch (offset)
 			{
-				case 0: 
+				case 0:
 					deque();
 					ix_mark = idx_get;
 					break;
-				case 1: 
+				case 1:
 					Symbol s0 = deque();
 					buffer[idx_get] = s0;
 					ix_mark = idx_get;
 					break;
 				default:
-					throw new IllegalStateException ("unsupported offset"); 
+					throw new IllegalStateException ("unsupported offset");
 			}
 		}
-        
+
 		/**
 		 * Reads next recognized token from the scanner. If scanner fails to recognize a token and
-		 * throws an exception it will be reported via Parser.scannerError().
+		 * throws an exception it will be reported via BeaverParser.scannerError().
 		 * <p>It is expected that scanner is capable of returning at least an EOF token after the
 		 * exception.</p>
-		 * 
+		 *
 		 * @return next recognized token
 		 * @throws IOException
 		 *             as thrown by a scanner
@@ -358,12 +358,12 @@ public abstract class Parser
 
 		private void initStack() throws IOException
 		{
-			if (states == null || states.length < Parser.this.states.length)
+			if (states == null || states.length < BeaverParser.this.states.length)
 			{
-				states = new short[Parser.this.states.length];
+				states = new short[BeaverParser.this.states.length];
 				min_top = 0;
 			}
-			System.arraycopy(Parser.this.states, min_top, states, min_top, (top = Parser.this.top) + 1);
+			System.arraycopy(BeaverParser.this.states, min_top, states, min_top, (top = BeaverParser.this.top) + 1);
 		}
 
 		private void increaseStackCapacity()
@@ -407,9 +407,9 @@ public abstract class Parser
 
 	/** Parsing events notification "gateway" */
 	protected Events report;
-	
 
-	protected Parser(ParsingTables tables)
+
+	protected BeaverParser(ParsingTables tables)
 	{
 		this.tables = tables;
 		this.accept_action_id = (short) ~tables.rule_infos.length;
@@ -418,11 +418,11 @@ public abstract class Parser
 
 	/**
 	* Parses a source and returns a semantic value of the accepted nonterminal
-	* 
+	*
 	* @param source of tokens - a Scanner
 	* @return semantic value of the accepted nonterminal
 	*/
-	public Object parse(Scanner source) throws IOException, Parser.Exception
+	public Object parse(Scanner source) throws IOException, BeaverParser.Exception
 	{
 		init();
 		return parse(new TokenStream(source));
@@ -432,19 +432,19 @@ public abstract class Parser
 	* Parses a source and returns a semantic value of the accepted nonterminal.
 	* Before parsing starts injects alternative goal marker into the source to
 	* indicate that an alternative goal should be matched.
-	* 
+	*
 	* @param source of tokens - a Scanner
 	* @param alt_goal_marker_id ID of a token like symbol that will be used as a marker
 	* @return semantic value of the accepted nonterminal
 	*/
-	public Object parse(Scanner source, short alt_goal_marker_id) throws IOException, Parser.Exception
+	public Object parse(Scanner source, short alt_goal_marker_id) throws IOException, BeaverParser.Exception
 	{
 		init();
 		TokenStream in = new TokenStream(source, new Symbol(alt_goal_marker_id));
 		return parse(in);
 	}
 
-	private Object parse(TokenStream in) throws IOException, Parser.Exception
+	private Object parse(TokenStream in) throws IOException, BeaverParser.Exception
 	{
 		while (true)
 		{
@@ -494,7 +494,7 @@ public abstract class Parser
 	/**
 	 * Invoke actual reduce action routine.
 	 * Method must be implemented by a generated parser
-	 * 
+	 *
 	 * @param rule_num ID of a reduce action routine to invoke
 	 * @param offset to the symbol before first action routine argument
 	 * @return reduced nonterminal
@@ -506,12 +506,12 @@ public abstract class Parser
 	 */
 	private void init()
 	{
-		if (report == null) 
+		if (report == null)
 			report = new Events();
-		
+
 		_symbols = new Symbol[states.length];
 		top = 0; // i.e. it's not empty
-		_symbols[top] = new Symbol("none"); // need a symbol here for a default reduce on the very first erroneous token  
+		_symbols[top] = new Symbol("none"); // need a symbol here for a default reduce on the very first erroneous token
 		states[top] = 1; // initial/first state
 	}
 
@@ -530,8 +530,8 @@ public abstract class Parser
 	}
 
 	/**
-	 * Shift a symbol to stack and go to a new state 
-	 * 
+	 * Shift a symbol to stack and go to a new state
+	 *
 	 * @param sym
 	 *            symbol that will be shifted
 	 * @param goto_state
@@ -547,7 +547,7 @@ public abstract class Parser
 
 	/**
 	 * Perform a reduce action.
-	 * 
+	 *
 	 * @param rule_id
 	 *            Number of the production by which to reduce
 	 * @return nonterminal created by a reduction
@@ -576,22 +576,22 @@ public abstract class Parser
 	 * Implements parsing error recovery. Tries several simple approches first, like deleting "bad" token
 	 * or replacing the latter with one of the expected (if possible). If simple methods have not worked
 	 * out, tries to do error phrase recovery.
-	 * 
+	 *
 	 * It is expected that normally descendand parsers do not need to alter this method. In same cases though
-	 * they may want to override it if they need a different error recovery strategy. 
-	 * 
-	 * @param token a lookahead terminal symbol that messed parsing 
+	 * they may want to override it if they need a different error recovery strategy.
+	 *
+	 * @param token a lookahead terminal symbol that messed parsing
 	 * @param in token stream
 	 * @throws IOException propagated from a scanner if it has issues with the source
-	 * @throws Parser.Exception if Parser cannot recover
+	 * @throws BeaverParser.Exception if BeaverParser cannot recover
 	 */
-	protected void recoverFromError(Symbol token, TokenStream in) throws IOException, Parser.Exception
+	protected void recoverFromError(Symbol token, TokenStream in) throws IOException, BeaverParser.Exception
 	{
 		if (token.id == 0) // end of input
-			throw new Parser.Exception("Cannot recover from the syntax error");
-		
+			throw new BeaverParser.Exception("Cannot recover from the syntax error");
+
 		in.setMode(TokenStream.BUFFER);
-		
+
 		Simulator sim = new Simulator();
 		short current_state = states[top];
 		if (!tables.compressed) // then we can try "insert missing" and "replace unexpected" recoveries
@@ -610,9 +610,9 @@ public abstract class Parser
 					return;
 				}
 				in.rewind();
-				
+
 				int offset = tables.actn_offsets[current_state];
-				
+
 				for (short term_id = (short) (first_term_id + 1); term_id < tables.n_term; term_id++)
 				{
 					int index = offset + term_id;
@@ -632,10 +632,10 @@ public abstract class Parser
 					}
 				}
 				in.remove(1); // alter stream as if an expected terminal replaced the unexpected one
-				
+
 				term.start = token.start;
 				term.end = token.end;
-				
+
 				for (short term_id = first_term_id; term_id < tables.n_term; term_id++)
 				{
 					int index = offset + term_id;
@@ -654,11 +654,11 @@ public abstract class Parser
 						in.rewind();
 					}
 				}
-				in.remove(0); // simple recoveries failed - remove all stream changes 
+				in.remove(0); // simple recoveries failed - remove all stream changes
 			}
 		}
 		// finally try parsing without the unexpected token (as if it was "deleted")
-		if (sim.parse(in)) 
+		if (sim.parse(in))
 		{
 			in.rewind();
 			in.setMode(TokenStream.FLUSH);
@@ -666,7 +666,7 @@ public abstract class Parser
 			return;
 		}
 		in.rewind();
-		
+
 		// Simple recoveries failed or are not applicable. Next step is an error phrase recovery.
 		/*
 		 * Find a state where parser can shift "error" symbol. Discard already reduced (and shifted)
@@ -683,7 +683,7 @@ public abstract class Parser
 			first_sym = _symbols[top];
 			// and go to the previous state
 			if (--top < 0)
-				throw new Parser.Exception("Cannot recover from the syntax error");
+				throw new BeaverParser.Exception("Cannot recover from the syntax error");
 		}
 		Symbol error = new Symbol(tables.error_symbol_id, first_sym.start, last_sym.end); // the end is temporary
 		shift(error, goto_state);
@@ -692,7 +692,7 @@ public abstract class Parser
 		{
 			in.rewind();
 			if (in.peek().id == 0) // EOF
-				throw new Parser.Exception("Cannot recover from the syntax error");
+				throw new BeaverParser.Exception("Cannot recover from the syntax error");
 			in.remove(0);
 		}
 		in.rewind();
