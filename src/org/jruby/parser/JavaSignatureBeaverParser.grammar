@@ -366,8 +366,14 @@ dims = LBRACK RBRACK {:
  :}
     ;
 // List<TypeNode>
-throws = THROWS class_type_list {: $$ = $2; :} 
- | /* none */ {: $$ = new ArrayList<TypeNode>(); :}
+throws = THROWS class_type_list.c_list {:
+                                        return c_list;
+                                        //$$ = $2;
+                                        :} 
+ | /* none */ {:
+    return new ArrayList<TypeNode>();
+    //$$ = new ArrayList<TypeNode>();
+    :}
     ;
 // List<TypeNode>
 class_type_list = class_type.c {:

@@ -658,14 +658,20 @@ public class JavaSignatureBeaverParser extends Parser {
      $$ = new ArrayTypeNode($1);
 				}
 			},
-			new Action() {	// [79] throws = THROWS class_type_list
+			new Action() {	// [79] throws = THROWS class_type_list.c_list
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = $2;
+					final Symbol _symbol_c_list = _symbols[offset + 2];
+					final List c_list = (List) _symbol_c_list.value;
+					
+                                        return c_list;
+                                        //$$ = $2;
 				}
 			},
 			new Action() {	// [80] throws = 
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = new ArrayList<TypeNode>();
+					
+    return new ArrayList<TypeNode>();
+    //$$ = new ArrayList<TypeNode>();
 				}
 			},
 			new Action() {	// [81] class_type_list = class_type.c

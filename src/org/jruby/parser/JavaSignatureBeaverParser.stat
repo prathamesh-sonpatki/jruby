@@ -53,7 +53,7 @@
 	class_or_interface_type: SHIFT; goto 11
 	class_type: SHIFT; goto 101
 	class_type_list: SHIFT; goto 8
-8:	EOF: REDUCE throws = THROWS class_type_list
+8:	EOF: REDUCE throws = THROWS class_type_list.c_list
 	COMMA: SHIFT; goto 9
 9:	IDENTIFIER: SHIFT; goto 19
 	name: SHIFT; goto 100
