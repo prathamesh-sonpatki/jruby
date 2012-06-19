@@ -578,72 +578,108 @@ public class JavaSignatureBeaverParser extends Parser {
 			},
 			new Action() {	// [63] modifier = PUBLIC
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.PUBLIC;
+					
+                   return Modifier.PUBIC;
+                   //$$ = Modifier.PUBLIC;
 				}
 			},
 			new Action() {	// [64] modifier = PROTECTED
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.PROTECTED;
+					
+        return Modifier.PROTECTED;
+        //$$ = Modifier.PROTECTED;
 				}
 			},
 			new Action() {	// [65] modifier = PRIVATE
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.PRIVATE;
+					
+        return Modifier.PRIVATE;
+        //$$ = Modifier.PRIVATE;
 				}
 			},
 			new Action() {	// [66] modifier = STATIC
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.STATIC;
+					
+        return Modifier.STATIC;
+        //$$ = Modifier.STATIC;
 				}
 			},
 			new Action() {	// [67] modifier = ABSTRACT
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.ABSTRACT;
+					
+        return Modifier.ABSTRACT;
+        //$$ = Modifier.ABSTRACT;
 				}
 			},
 			new Action() {	// [68] modifier = FINAL
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.FINAL;
+					
+        return Modifier.FINAL;
+        //$$ = Modifier.FINAL;
 				}
 			},
 			new Action() {	// [69] modifier = NATIVE
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.NATIVE;
+					
+        return Modifier.NATIVE;
+        //$$ = Modifier.NATIVE;
 				}
 			},
 			new Action() {	// [70] modifier = SYNCHRONIZED
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.SYNCHRONIZED;
+					
+     return Modifier.SYNCHRONIZED;
+     //$$ = Modifier.SYNCHRONIZED;
 				}
 			},
 			new Action() {	// [71] modifier = TRANSIENT
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.TRANSIENT;
+					
+     return Modifier.TRANSIENT;
+     //$$ = Modifier.TRANSIENT;
 				}
 			},
 			new Action() {	// [72] modifier = VOLATILE
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.VOLATILE;
+					
+     return Modifier.VOLATILE;
+     //$$ = Modifier.VOLATILE;
 				}
 			},
 			new Action() {	// [73] modifier = STRICTFP
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = Modifier.STRICTFP;
+					
+             return Modifier.STRICTFP;
+             //$$ = Modifier.STRICTFP;
 				}
 			},
-			new Action() {	// [74] modifier = annotation
+			new Action() {	// [74] modifier = annotation.a
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = $1;
+					final Symbol _symbol_a = _symbols[offset + 1];
+					final Annotation a = (Annotation) _symbol_a.value;
+					
+                 return a;
+     //$$ = $1;
 				}
 			},
-			new Action() {	// [75] name = IDENTIFIER
+			new Action() {	// [75] name = IDENTIFIER.id
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = $1;
+					final Symbol _symbol_id = _symbols[offset + 1];
+					final String id = (String) _symbol_id.value;
+					
+                   return id;
+                   //$$ = $1;
 				}
 			},
-			new Action() {	// [76] name = name DOT IDENTIFIER
+			new Action() {	// [76] name = name.n DOT IDENTIFIER.id
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = $1 + "." + $3;
+					final Symbol _symbol_n = _symbols[offset + 1];
+					final String n = (String) _symbol_n.value;
+					final Symbol _symbol_id = _symbols[offset + 3];
+					final String id = (String) _symbol_id.value;
+					
+                             return n + ". " + id;
+                             //$$ = $1 + "." + $3;
 				}
 			},
 			new Action() {	// [77] dims = LBRACK RBRACK
@@ -684,8 +720,8 @@ public class JavaSignatureBeaverParser extends Parser {
 					final ReferenceTypeNode c = (ReferenceTypeNode) _symbol_c.value;
 					
                                 List val = new ArrayList<TypeNode>();
-                                (List)val.add(c);
-                                return val;
+                                return (List)val.add(c);
+                                //return val;
                                 //$$ = new ArrayList<TypeNode>();
                                 // $<List>$.add($1);
 				}
@@ -697,7 +733,7 @@ public class JavaSignatureBeaverParser extends Parser {
 					final Symbol _symbol_c = _symbols[offset + 3];
 					final ReferenceTypeNode c = (ReferenceTypeNode) _symbol_c.value;
 					
-                                                        (List)l.add(c);
+                                                        l.add(c);
                                                         // $<List>1.add($3);
 				}
 			},

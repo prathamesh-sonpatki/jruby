@@ -94,8 +94,8 @@
 16:	DOT: SHIFT; goto 17
 	[any]: REDUCE class_or_interface = class_or_interface.c LT type_argument_list_1.t DOT name.n
 17:	IDENTIFIER: SHIFT; goto 18
-18:	[any]: REDUCE name = name DOT IDENTIFIER
-19:	[any]: REDUCE name = IDENTIFIER
+18:	[any]: REDUCE name = name.n DOT IDENTIFIER.id
+19:	[any]: REDUCE name = IDENTIFIER.id
 20:	[any]: REDUCE type_argument_list_1 = type_argument_1
 21:	COMMA: SHIFT; goto 22
 22:	IDENTIFIER: SHIFT; goto 19
@@ -747,7 +747,7 @@
 184:	[any]: REDUCE modifier = TRANSIENT
 185:	[any]: REDUCE modifier = VOLATILE
 186:	[any]: REDUCE modifier = STRICTFP
-187:	[any]: REDUCE modifier = annotation
+187:	[any]: REDUCE modifier = annotation.a
 188:	LPAREN: SHIFT; goto 189
 	[any]: REDUCE annotation = annotation_name.a
 189:	IDENTIFIER: SHIFT; goto 213
@@ -904,7 +904,7 @@
 211:	[any]: REDUCE annotation_array_values = annotation_value.a
 212:	[any]: REDUCE annotation_param = annotation_value.a
 213:	EQUAL: REDUCE type_variable = IDENTIFIER.id
-	[any]: REDUCE name = IDENTIFIER
+	[any]: REDUCE name = IDENTIFIER.id
 214:	RPAREN: REDUCE annotation_params_opt = annotation_params_none
 215:	[any]: REDUCE annotation_params = annotation_param.p
 216:	[any]: REDUCE modifiers_opt = modifiers_none

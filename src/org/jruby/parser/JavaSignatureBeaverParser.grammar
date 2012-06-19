@@ -341,22 +341,62 @@ modifiers = modifier {:
 modifiers_none = {: $$ = new ArrayList<Object>(); :}
     ;
 // Object
-modifier = PUBLIC {: $$ = Modifier.PUBLIC; :}
- | PROTECTED {: $$ = Modifier.PROTECTED; :}
- | PRIVATE {: $$ = Modifier.PRIVATE; :}
- | STATIC {: $$ = Modifier.STATIC; :}
- | ABSTRACT {: $$ = Modifier.ABSTRACT; :} 
- | FINAL {: $$ = Modifier.FINAL; :}
- | NATIVE {: $$ = Modifier.NATIVE; :}
- | SYNCHRONIZED {: $$ = Modifier.SYNCHRONIZED; :}
- | TRANSIENT {: $$ = Modifier.TRANSIENT; :}
- | VOLATILE {: $$ = Modifier.VOLATILE; :}
- | STRICTFP {: $$ = Modifier.STRICTFP; :}
- | annotation {: $$ = $1; :}
+modifier = PUBLIC {:
+                   return Modifier.PUBIC;
+                   //$$ = Modifier.PUBLIC;
+                   :}
+    | PROTECTED {:
+        return Modifier.PROTECTED;
+        //$$ = Modifier.PROTECTED;
+        :}
+    | PRIVATE {:
+        return Modifier.PRIVATE;
+        //$$ = Modifier.PRIVATE;
+        :}
+    | STATIC {:
+        return Modifier.STATIC;
+        //$$ = Modifier.STATIC;
+        :}
+    | ABSTRACT {:
+        return Modifier.ABSTRACT;
+        //$$ = Modifier.ABSTRACT; :} 
+    | FINAL {:
+        return Modifier.FINAL;
+        //$$ = Modifier.FINAL; :}
+    | NATIVE {:
+        return Modifier.NATIVE;
+        //$$ = Modifier.NATIVE;
+        :}
+ | SYNCHRONIZED {:
+     return Modifier.SYNCHRONIZED;
+     //$$ = Modifier.SYNCHRONIZED;
+     :}
+ | TRANSIENT {:
+     return Modifier.TRANSIENT;
+     //$$ = Modifier.TRANSIENT;
+     :}
+ | VOLATILE {:
+     return Modifier.VOLATILE;
+     //$$ = Modifier.VOLATILE;
+    :}
+ | STRICTFP {:
+             return Modifier.STRICTFP;
+             //$$ = Modifier.STRICTFP;
+     :}
+ | annotation.a {:
+                 return a;
+     //$$ = $1;
+    :}
     ;
 // String
-name = IDENTIFIER {: $$ = $1; :}                  // Foo (or foo)
- | name DOT IDENTIFIER {: $$ = $1 + "." + $3; :}  // foo.Foo 
+name = IDENTIFIER.id {:
+                   return id;
+                   //$$ = $1;
+                   :}                  // Foo (or foo)
+ | name.n DOT IDENTIFIER.id {:
+                             return n + ". " + id;
+                             //$$ = $1 + "." + $3;
+    :}  // foo.Foo 
     ;
 // String -- we do not use this for any info
 dims = LBRACK RBRACK {: 
@@ -380,13 +420,13 @@ throws = THROWS class_type_list.c_list {:
 // List<TypeNode>
 class_type_list = class_type.c {:
                                 List val = new ArrayList<TypeNode>();
-                                (List)val.add(c);
-                                return val;
+                                return (List)val.add(c);
+                                //return val;
                                 //$$ = new ArrayList<TypeNode>();
                                 // $<List>$.add($1);
                                :}
                | class_type_list.l COMMA class_type.c {:
-                                                        (List)l.add(c);
+                                                        l.add(c);
                                                         // $<List>1.add($3);
                                                       :}
     ;
