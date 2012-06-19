@@ -7,7 +7,6 @@ import java.util.List;
 import org.jruby.ast.java_signature.AnnotationExpression;
 import org.jruby.ast.java_signature.Modifier;
 import org.jruby.ast.java_signature.TypeNode;
-import org.jruby.lexer.JavaSignatureBeaverLexer;
 import org.jruby.ast.java_signature.ConstructorSignatureNode;
 import org.jruby.ast.java_signature.Literal;
 import java.io.IOException;
@@ -16,6 +15,7 @@ import org.jruby.ast.java_signature.ReferenceTypeNode;
 import org.jruby.ast.java_signature.SignatureNode;
 import beaver.*;
 import org.jruby.ast.java_signature.StringLiteral;
+import org.jruby.lexer.JavaSignatureLexer;
 import org.jruby.ast.java_signature.AnnotationParameter;
 import org.jruby.ast.java_signature.Annotation;
 import org.jruby.ast.java_signature.CharacterLiteral;
@@ -123,13 +123,13 @@ public class JavaSignatureBeaverParser extends Parser {
 		"QkD#LGXSCTf460kqiNbrjShGZmLEmep5du6ag3ljIPVmVwK1fSGGna$97aZEIxwSau8nGr8" +
 		"p9VJrT9UdxiJvuvtmvN17ZUSZmmTPSdml2fqEp6Xh5iqDbY$4yxJF4u");
 
-    public class JavaSignatureBeaverParser {
-        private static JavaSignatureBeaverParser parser = new JavaSignatureBeaverParser();
+    
+    /*   private static JavaSignatureBeaverParser parser = new JavaSignatureBeaverParser();
 
         public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
-            return (SignatureNode) parser.nextToken(JavaSignatureBeaverLexer.create(in));
+            return (SignatureNode) parser.nextToken(JavaSignatureLexer.create(in));
         }
-    }
+    */
 
 	private final Action[] actions;
 
@@ -523,30 +523,48 @@ public class JavaSignatureBeaverParser extends Parser {
 				}
 			},
 			Action.RETURN,	// [44] type_argument_list_1 = type_argument_1
-			new Action() {	// [45] type_argument_list_1 = type_argument_list COMMA type_argument_1
+			new Action() {	// [45] type_argument_list_1 = type_argument_list.t_list COMMA type_argument_1.t1
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_t_list = _symbols[offset + 1];
+					final String t_list = (String) _symbol_t_list.value;
+					final Symbol _symbol_t1 = _symbols[offset + 3];
+					final String t1 = (String) _symbol_t1.value;
 					
-     $$ = $1 + ", " + $3;
+                                                       return t_list + ", " + t1;
+                                                       //$$ = $1 + ", " + $3;
 				}
 			},
 			Action.RETURN,	// [46] type_argument_list_2 = type_argument_2
-			new Action() {	// [47] type_argument_list_2 = type_argument_list COMMA type_argument_2
+			new Action() {	// [47] type_argument_list_2 = type_argument_list.t_list COMMA type_argument_2.t2
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_t_list = _symbols[offset + 1];
+					final String t_list = (String) _symbol_t_list.value;
+					final Symbol _symbol_t2 = _symbols[offset + 3];
+					final String t2 = (String) _symbol_t2.value;
 					
-     $$ = $1 + ", " + $3;
+                                                       return t_list + ", " + t2;
+                                                       //$$ = $1 + ", " + $3;
 				}
 			},
 			Action.RETURN,	// [48] type_argument_list_3 = type_argument_3
-			new Action() {	// [49] type_argument_list_3 = type_argument_list COMMA type_argument_3
+			new Action() {	// [49] type_argument_list_3 = type_argument_list.t_list COMMA type_argument_3.t3
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_t_list = _symbols[offset + 1];
+					final String t_list = (String) _symbol_t_list.value;
+					final Symbol _symbol_t3 = _symbols[offset + 3];
+					final String t3 = (String) _symbol_t3.value;
 					
-     $$ = $1 + ", " + $3;
+                                                       return t_list + ", " + t3;
+                                                       //$$ = $1 + ", " + $3;
 				}
 			},
-			new Action() {	// [50] type_argument = reference_type
+			new Action() {	// [50] type_argument = reference_type.r
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_r = _symbols[offset + 1];
+					final ReferenceTypeNode r = (ReferenceTypeNode) _symbol_r.value;
 					
-     $$ = $1.getFullyTypedName();
+                                  return r.getFullyTypedName();
+                                  //$$ = $1.getFullyTypedName();
 				}
 			},
 			Action.RETURN,	// [51] type_argument = wildcard
@@ -558,17 +576,26 @@ public class JavaSignatureBeaverParser extends Parser {
 			Action.RETURN,	// [57] type_argument_3 = wildcard_3
 			Action.RETURN,	// [58] modifiers_opt = modifiers
 			Action.RETURN,	// [59] modifiers_opt = modifiers_none
-			new Action() {	// [60] modifiers = modifier
+			new Action() {	// [60] modifiers = modifier.mod
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_mod = _symbols[offset + 1];
+					final Object mod = (Object) _symbol_mod.value;
 					
-    $$ = new ArrayList<Object>();
-    $<List>$.add($1);
+                      ArrayList result = new ArrayList<Object>();
+                      //$$ = new ArrayList<Object>();
+                      return (List)result.add(mod);
+                      //$<List>$.add($1);
 				}
 			},
-			new Action() {	// [61] modifiers = modifiers modifier
+			new Action() {	// [61] modifiers = modifiers.mods modifier.mod
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_mods = _symbols[offset + 1];
+					final List mods = (List) _symbol_mods.value;
+					final Symbol _symbol_mod = _symbols[offset + 2];
+					final Object mod = (Object) _symbol_mod.value;
 					
-    $1.add($2);
+     mods.add(mod);
+     //$1.add($2);
 				}
 			},
 			new Action() {	// [62] modifiers_none = 

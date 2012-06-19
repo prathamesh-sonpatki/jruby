@@ -120,8 +120,8 @@
 	wildcard: SHIFT; goto 27
 	wildcard_1: SHIFT; goto 29
 23:	COMMA: REDUCE type_argument_list = type_argument_list.l COMMA type_argument.a
-24:	[any]: REDUCE type_argument_list_1 = type_argument_list COMMA type_argument_1
-25:	COMMA: REDUCE type_argument = reference_type
+24:	[any]: REDUCE type_argument_list_1 = type_argument_list.t_list COMMA type_argument_1.t1
+25:	COMMA: REDUCE type_argument = reference_type.r
 	GT: SHIFT; goto 26
 26:	[any]: REDUCE reference_type_1 = reference_type.r GT
 27:	COMMA: REDUCE type_argument = wildcard
@@ -225,8 +225,8 @@
 	wildcard_1: SHIFT; goto 29
 	type_argument_2: SHIFT; goto 50
 	wildcard_2: SHIFT; goto 54
-50:	[any]: REDUCE type_argument_list_2 = type_argument_list COMMA type_argument_2
-51:	COMMA: REDUCE type_argument = reference_type
+50:	[any]: REDUCE type_argument_list_2 = type_argument_list.t_list COMMA type_argument_2.t2
+51:	COMMA: REDUCE type_argument = reference_type.r
 	GT: SHIFT; goto 26
 	RSHIFT: SHIFT; goto 52
 52:	[any]: REDUCE reference_type_2 = reference_type.r RSHIFT
@@ -320,8 +320,8 @@
 	wildcard_2: SHIFT; goto 54
 	type_argument_3: SHIFT; goto 64
 	wildcard_3: SHIFT; goto 68
-64:	[any]: REDUCE type_argument_list_3 = type_argument_list COMMA type_argument_3
-65:	COMMA: REDUCE type_argument = reference_type
+64:	[any]: REDUCE type_argument_list_3 = type_argument_list.t_list COMMA type_argument_3.t3
+65:	COMMA: REDUCE type_argument = reference_type.r
 	GT: SHIFT; goto 26
 	RSHIFT: SHIFT; goto 52
 	URSHIFT: SHIFT; goto 66
@@ -735,7 +735,7 @@
 	annotation: SHIFT; goto 187
 	modifier: SHIFT; goto 175
 	[any]: REDUCE modifiers_opt = modifiers
-175:	[any]: REDUCE modifiers = modifiers modifier
+175:	[any]: REDUCE modifiers = modifiers.mods modifier.mod
 176:	[any]: REDUCE modifier = PUBLIC
 177:	[any]: REDUCE modifier = PROTECTED
 178:	[any]: REDUCE modifier = PRIVATE
@@ -908,4 +908,4 @@
 214:	RPAREN: REDUCE annotation_params_opt = annotation_params_none
 215:	[any]: REDUCE annotation_params = annotation_param.p
 216:	[any]: REDUCE modifiers_opt = modifiers_none
-217:	[any]: REDUCE modifiers = modifier
+217:	[any]: REDUCE modifiers = modifier.mod
