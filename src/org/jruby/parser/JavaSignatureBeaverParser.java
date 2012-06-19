@@ -705,21 +705,32 @@ public class JavaSignatureBeaverParser extends Parser {
 			Action.RETURN,	// [84] formal_parameter_list_opt = formal_parameter_list
 			new Action() {	// [85] formal_parameter_list_opt = 
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 $$ = new ArrayList<ParameterNode>();
+					
+                  return new ArrayList<ParameterNode>();
+                  //$$ = new ArrayList<ParameterNode>();
 				}
 			},
-			new Action() {	// [86] formal_parameter_list = formal_parameter
+			new Action() {	// [86] formal_parameter_list = formal_parameter.f
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_f = _symbols[offset + 1];
+					final ParameterNode f = (ParameterNode) _symbol_f.value;
 					
-                          List<ParameterNode> list = new ArrayList<ParameterNode>();
-                          list.add($1);
-                          $$ = list;
+                                          List<ParameterNode> list = new ArrayList<ParameterNode>();
+                                          //list.add($1);
+                                            list.add(f);
+                                            //$$ = list;
+                                            return list;
 				}
 			},
-			new Action() {	// [87] formal_parameter_list = formal_parameter_list COMMA formal_parameter
+			new Action() {	// [87] formal_parameter_list = formal_parameter_list.f_list COMMA formal_parameter.f
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_f_list = _symbols[offset + 1];
+					final List f_list = (List) _symbol_f_list.value;
+					final Symbol _symbol_f = _symbols[offset + 3];
+					final ParameterNode f = (ParameterNode) _symbol_f.value;
 					
-                          $1.add($3);
+                                                             f_list.add(f);
+                                                             //$1.add($3);
 				}
 			},
 			new Action() {	// [88] formal_parameter = type.t variable_declarator_id.v_id

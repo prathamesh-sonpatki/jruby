@@ -391,16 +391,22 @@ method_declarator = IDENTIFIER.id LPAREN formal_parameter_list_opt.l RPAREN {:
 
 // List<ParameterNode>
 formal_parameter_list_opt = formal_parameter_list 
-    | /* none */ {: $$ = new ArrayList<ParameterNode>(); :}
+    | /* none */ {:
+                  return new ArrayList<ParameterNode>();
+                  //$$ = new ArrayList<ParameterNode>();
+                  :}
 ;
 // List<ParameterNode>
-formal_parameter_list = formal_parameter {:
-                          List<ParameterNode> list = new ArrayList<ParameterNode>();
-                          list.add($1);
-                          $$ = list;
+formal_parameter_list = formal_parameter.f {:
+                                          List<ParameterNode> list = new ArrayList<ParameterNode>();
+                                          //list.add($1);
+                                            list.add(f);
+                                            //$$ = list;
+                                            return list;
                                           :}
-    | formal_parameter_list COMMA formal_parameter {:
-                          $1.add($3);
+    | formal_parameter_list.f_list COMMA formal_parameter.f {:
+                                                             f_list.add(f);
+                                                             //$1.add($3);
                           :}
 ;
 // ParameterNode

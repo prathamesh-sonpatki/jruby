@@ -525,7 +525,7 @@
 	array_type: SHIFT; goto 31
 	type: SHIFT; goto 116
 	formal_parameter: SHIFT; goto 115
-115:	[any]: REDUCE formal_parameter_list = formal_parameter_list COMMA formal_parameter
+115:	[any]: REDUCE formal_parameter_list = formal_parameter_list.f_list COMMA formal_parameter.f
 116:	IDENTIFIER: SHIFT; goto 122
 	ELLIPSIS: SHIFT; goto 120
 	variable_declarator_id: SHIFT; goto 117
@@ -592,7 +592,7 @@
 	wildcard_1: SHIFT; goto 29
 	type_argument_list_1: SHIFT; goto 38
 	type_argument_list: SHIFT; goto 21
-132:	[any]: REDUCE formal_parameter_list = formal_parameter
+132:	[any]: REDUCE formal_parameter_list = formal_parameter.f
 133:	IDENTIFIER: SHIFT; goto 109
 	method_declarator: SHIFT; goto 134
 134:	EOF: REDUCE throws = 
