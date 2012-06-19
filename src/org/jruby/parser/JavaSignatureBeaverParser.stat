@@ -194,7 +194,7 @@
 41:	LBRACK: SHIFT; goto 42
 	[any]: REDUCE array_type = class_or_interface.c LT type_argument_list_1.t DOT name.n dims.d
 42:	RBRACK: SHIFT; goto 43
-43:	[any]: REDUCE dims = dims LBRACK RBRACK
+43:	[any]: REDUCE dims = dims.d LBRACK RBRACK
 44:	RBRACK: SHIFT; goto 45
 45:	[any]: REDUCE dims = LBRACK RBRACK
 46:	LBRACK: SHIFT; goto 42

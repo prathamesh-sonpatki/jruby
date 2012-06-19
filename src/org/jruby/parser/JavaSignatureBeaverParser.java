@@ -649,13 +649,17 @@ public class JavaSignatureBeaverParser extends Parser {
 			new Action() {	// [77] dims = LBRACK RBRACK
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					 
-     $$ = new ArrayTypeNode();
+                      return new ArrayTypeNode();
+                      // $$ = new ArrayTypeNode();
 				}
 			},
-			new Action() {	// [78] dims = dims LBRACK RBRACK
+			new Action() {	// [78] dims = dims.d LBRACK RBRACK
 				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_d = _symbols[offset + 1];
+					final ArrayTypeNode d = (ArrayTypeNode) _symbol_d.value;
 					 
-     $$ = new ArrayTypeNode($1);
+     return new ArrayTypeNode(d);
+     //$$ = new ArrayTypeNode($1);
 				}
 			},
 			new Action() {	// [79] throws = THROWS class_type_list.c_list

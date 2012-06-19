@@ -360,9 +360,11 @@ name = IDENTIFIER {: $$ = $1; :}                  // Foo (or foo)
     ;
 // String -- we do not use this for any info
 dims = LBRACK RBRACK {: 
-     $$ = new ArrayTypeNode(); 
- :} | dims LBRACK RBRACK {: 
-     $$ = new ArrayTypeNode($1);
+                      return new ArrayTypeNode();
+                      // $$ = new ArrayTypeNode();
+ :} | dims.d LBRACK RBRACK {: 
+     return new ArrayTypeNode(d);
+     //$$ = new ArrayTypeNode($1);
  :}
     ;
 // List<TypeNode>
