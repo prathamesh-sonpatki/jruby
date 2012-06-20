@@ -74,7 +74,8 @@ return_type: #{return_type}
 
     def self.parse(signature)
       stream = java.io.ByteArrayInputStream.new(signature.to_s.to_java_bytes)
-      ast = org.jruby.parser.JavaSignatureParser.parse(stream)
+      ast = org.jruby.parser.JavaSignatureBeaverParser.parse(stream)
+      # ast = org.jruby.parser.JavaSignatureParser.parse(stream)
       new signature, ast
     end
 

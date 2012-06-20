@@ -1,6 +1,6 @@
-require File.join(File.dirname(__FILE__), 'helpers', 'signature_parser_helper')
 
-describe JavaSignatureParser do
+#describe JavaSignatureParser do
+describe JavaSignatureBeaverParser do
   it "parses primitive-only signatures like 'void foo()'" do
     signature('void foo()').should have_signature(VOID, 'foo', [])
     signature('byte foo()').should have_signature(BYTE, 'foo', [])

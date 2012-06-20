@@ -3,7 +3,8 @@ require 'java'
 java_import org.jruby.ast.java_signature.PrimitiveTypeNode
 java_import org.jruby.ast.java_signature.ArrayTypeNode
 
-java_import org.jruby.parser.JavaSignatureParser
+#java_import org.jruby.parser.JavaSignatureParser
+java_import org.jruby.parser.JavaSignatureBeaverParser
 
 java_import java.io.ByteArrayInputStream
 
@@ -22,7 +23,8 @@ Override = java.lang.Override
 class Object
   def signature(string)
     bytes = string.to_java.bytes
-    JavaSignatureParser.parse ByteArrayInputStream.new(bytes)
+    JavaSignatureBeaverParser.parse ByteArrayInputStream.new(bytes)
+    #JavaSignatureParser.parse ByteArrayInputStream.new(bytes)
   end
 
   def arrayOf(a_type)

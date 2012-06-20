@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * This file is part of Beaver BeaverParser Generator.                       *
+ * This file is part of Beaver Parser Generator.                       *
  * Copyright (C) 2003,2004 Alexander Demenchuk <alder@softanvil.com>.  *
  * All rights reserved.                                                *
  * See the file "LICENSE" for the terms and conditions for copying,    *
@@ -14,7 +14,7 @@ import java.io.IOException;
  * Almost complete implementation of a LALR parser. Two components that it lacks to parse a concrete
  * grammar -- rule actions and parsing tables -- are provided by a generated subclass.
  */
-abstract class BeaverParser
+public abstract class Parser
 {
 	static public class Exception extends java.lang.Exception
 	{
@@ -278,7 +278,7 @@ abstract class BeaverParser
 
 		/**
 		 * Reads next recognized token from the scanner. If scanner fails to recognize a token and
-		 * throws an exception it will be reported via BeaverParser.scannerError().
+		 * throws an exception it will be reported via Parser.scannerError().
 		 * <p>It is expected that scanner is capable of returning at least an EOF token after the
 		 * exception.</p>
 		 *
@@ -358,12 +358,12 @@ abstract class BeaverParser
 
 		private void initStack() throws IOException
 		{
-			if (states == null || states.length < BeaverParser.this.states.length)
+			if (states == null || states.length < Parser.this.states.length)
 			{
-				states = new short[BeaverParser.this.states.length];
+				states = new short[Parser.this.states.length];
 				min_top = 0;
 			}
-			System.arraycopy(BeaverParser.this.states, min_top, states, min_top, (top = BeaverParser.this.top) + 1);
+			System.arraycopy(Parser.this.states, min_top, states, min_top, (top = Parser.this.top) + 1);
 		}
 
 		private void increaseStackCapacity()
@@ -409,7 +409,7 @@ abstract class BeaverParser
 	protected Events report;
 
 
-	protected BeaverParser(ParsingTables tables)
+	protected Parser(ParsingTables tables)
 	{
 		this.tables = tables;
 		this.accept_action_id = (short) ~tables.rule_infos.length;
@@ -422,7 +422,7 @@ abstract class BeaverParser
 	* @param source of tokens - a Scanner
 	* @return semantic value of the accepted nonterminal
 	*/
-	public Object parse(Scanner source) throws IOException, BeaverParser.Exception
+	public Object parse(Scanner source) throws IOException, Parser.Exception
 	{
 		init();
 		return parse(new TokenStream(source));
@@ -437,14 +437,14 @@ abstract class BeaverParser
 	* @param alt_goal_marker_id ID of a token like symbol that will be used as a marker
 	* @return semantic value of the accepted nonterminal
 	*/
-	public Object parse(Scanner source, short alt_goal_marker_id) throws IOException, BeaverParser.Exception
+	public Object parse(Scanner source, short alt_goal_marker_id) throws IOException, Parser.Exception
 	{
 		init();
 		TokenStream in = new TokenStream(source, new Symbol(alt_goal_marker_id));
 		return parse(in);
 	}
 
-	private Object parse(TokenStream in) throws IOException, BeaverParser.Exception
+	private Object parse(TokenStream in) throws IOException, Parser.Exception
 	{
 		while (true)
 		{
@@ -583,12 +583,12 @@ abstract class BeaverParser
 	 * @param token a lookahead terminal symbol that messed parsing
 	 * @param in token stream
 	 * @throws IOException propagated from a scanner if it has issues with the source
-	 * @throws BeaverParser.Exception if BeaverParser cannot recover
+	 * @throws Parser.Exception if Parser cannot recover
 	 */
-	protected void recoverFromError(Symbol token, TokenStream in) throws IOException, BeaverParser.Exception
+	protected void recoverFromError(Symbol token, TokenStream in) throws IOException, Parser.Exception
 	{
 		if (token.id == 0) // end of input
-			throw new BeaverParser.Exception("Cannot recover from the syntax error");
+			throw new Parser.Exception("Cannot recover from the syntax error");
 
 		in.setMode(TokenStream.BUFFER);
 
@@ -683,7 +683,7 @@ abstract class BeaverParser
 			first_sym = _symbols[top];
 			// and go to the previous state
 			if (--top < 0)
-				throw new BeaverParser.Exception("Cannot recover from the syntax error");
+				throw new Parser.Exception("Cannot recover from the syntax error");
 		}
 		Symbol error = new Symbol(tables.error_symbol_id, first_sym.start, last_sym.end); // the end is temporary
 		shift(error, goto_state);
@@ -692,7 +692,7 @@ abstract class BeaverParser
 		{
 			in.rewind();
 			if (in.peek().id == 0) // EOF
-				throw new BeaverParser.Exception("Cannot recover from the syntax error");
+				throw new Parser.Exception("Cannot recover from the syntax error");
 			in.remove(0);
 		}
 		in.rewind();

@@ -21,10 +21,38 @@ import org.jruby.parser.JavaSignatureBeaverParser.Terminals;
 %line
 %column
 %{
-   public static JavaSignatureBeaverLexer create(java.io.InputStream stream) {
-    return new JavaSignatureBeaverLexer(stream);
+   public static java.io.InputStream  create(java.io.InputStream stream) {
+    return  (stream);
   }
 
+  boolean stringResult = false;
+  boolean characterResult = false;
+  StringBuilder stringBuf = new StringBuilder();
+
+  public Object value() {
+    if (stringResult) {
+        stringResult = false;
+        String value = stringBuf.toString();
+        stringBuf.setLength(0);
+        return value;
+    } else if (characterResult) {
+        characterResult = false;
+        String value = stringBuf.toString();
+        if (stringBuf.length() != 1) throw new Error("Character not on char ("+ value +")");
+        stringBuf.setLength(0);
+        return value;
+    }
+    return yytext();
+  }
+  private Symbol newToken(short id)
+	{
+		return new Symbol(id, yyline + 1, yycolumn + 1, yylength());
+	}
+
+	private Symbol newToken(short id, Object value)
+	{
+		return new Symbol(id, yyline + 1, yycolumn + 1, yylength(), value);
+	}
 
 %}
 

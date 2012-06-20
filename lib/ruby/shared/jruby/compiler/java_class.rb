@@ -54,7 +54,8 @@ module JRuby::Compiler
     include AST::visitor::NodeVisitor
 
     java_import AST::NodeType
-    java_import org.jruby.parser.JavaSignatureParser
+    java_import org.jruby.parser.JavaSignatureBeaverParser
+    #java_import org.jruby.parser.JavaSignatureParser
     java_import java.io.ByteArrayInputStream
 
     extend VisitorBuilder
@@ -139,7 +140,8 @@ module JRuby::Compiler
     def build_signature(signature)
       if signature.kind_of? String
         bytes = signature.to_java_bytes
-        return JavaSignatureParser.parse(ByteArrayInputStream.new(bytes))
+        return JavaSignatureBeaverParser.parse(ByteArrayInputStream.new(bytes))
+        #return JavaSignatureParser.parse(ByteArrayInputStream.new(bytes))
       else
         raise "java_signature must take a literal string"
       end
