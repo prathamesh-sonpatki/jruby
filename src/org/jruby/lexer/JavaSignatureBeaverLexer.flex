@@ -64,8 +64,8 @@ Identifier     = [:jletter:] [:jletterdigit:]*
 //UnicodeEscape  = "\\u" {HexDigit} {HexDigit} {HexDigit} {HexDigit}
 //EscapedChar    = "\\" [nybrf\\'\"]
 //NonEscapedChar = [^nybrf\\'\"]
-//CharacterLiteral = "'" ({NonEscapedChar} | {EscapedChar} | {UnicodeEscape}) "'"
-//StringLiteral  = "\"" ({NonEscapedChar} | {EscapedChar} | {UnicodeEscape})* "\""
+CharacterLiteral = "'" ({NonEscapedChar} | {EscapedChar} | {UnicodeEscape}) "'"
+StringLiteral  = "\"" ({NonEscapedChar} | {EscapedChar} | {UnicodeEscape})* "\""
 
 %state CHARACTER
 %state STRING

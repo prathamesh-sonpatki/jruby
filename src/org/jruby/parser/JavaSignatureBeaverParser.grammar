@@ -31,13 +31,13 @@
 %class "JavaSignatureBeaverParser";
 
 %embed {:
-	private static JavaSignatureParser parser = new JavaSignatureParser();
-     	public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
-        	return (SignatureNode) parser.parse(in); 
-        	}
+        private static JavaSignatureParser parser = new JavaSignatureParser();
+        public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
+                return (SignatureNode) parser.parse(in);
+                }
         :};
 
-%terminals  BOOLEAN, BYTE, SHORT, INT, LONG, CHAR, FLOAT, DOUBLE, VOID, // primitive types 
+%terminals  BOOLEAN, BYTE, SHORT, INT, LONG, CHAR, FLOAT, DOUBLE, VOID, // primitive types
      PUBLIC, PRIVATE, PROTECTED, STATIC, ABSTRACT, FINAL, NATIVE, SYNCHRONIZED, TRANSIENT, VOLATILE, STRICTFP, //modifiers
      IDENTIFIER, //identifier
      AND, AT, DOT, COMMA, ELLIPSIS, EQUAL, LCURLY, RCURLY, LPAREN, RPAREN, LBRACK, RBRACK, QUESTION, LT, GT, THROWS, EXTENDS, SUPER,  RSHIFT, URSHIFT, CHARACTER_LITERAL, STRING_LITERAL // syntax markers
@@ -61,7 +61,7 @@
 %typeof  reference_type_1, reference_type_2, reference_type_3= "String";
 %typeof  type_argument_list_1, type_argument_list_2, type_argument_list_3= "String";
 %typeof  type_parameter, type_parameter_1= "String";
-%typeof  type_parameter_list, type_parameter_list_1 = "String"; 
+%typeof  type_parameter_list, type_parameter_list_1 = "String";
 %typeof  type_bound_opt, type_bound, additional_bound_list, additional_bound_list_opt= "String";
 %typeof  annotation_name= "String";
 %typeof  modifier = "Object";  // Can be either modifier enum or Annotation instance
@@ -117,7 +117,7 @@ primitive_type =
     | BOOLEAN {:
                return new Symbol(PrimitiveTypeNode.BOOLEAN);
         //$$ = PrimitiveTypeNode.BOOLEAN;
-        :} 
+        :}
     | FLOAT {:
              return new Symbol(PrimitiveTypeNode.FLOAT);
         //$$ = PrimitiveTypeNode.FLOAT;
@@ -138,9 +138,9 @@ reference_type = class_or_interface_type.c {:
                 :}
     ;
 // String
-type_variable = IDENTIFIER.id {: 
+type_variable = IDENTIFIER.id {:
                                return new Symbol(new String(id));
-                               // $$ = $1; 
+                               // $$ = $1;
                               :}
     ;
 // ReferenceTypeNode
@@ -163,7 +163,7 @@ class_or_interface_type = class_or_interface
  | class_or_interface.c LT type_argument_list_1.l {:
                                                String genericTyping = "<" + l;
                                                //String genericTyping = "<" + $3;
-                                               ReferenceTypeNode result = c;  
+                                               ReferenceTypeNode result = c;
                                                //$$ = $1;
                                                c.setGenericsTyping(genericTyping);
                                                //$1.setGenericsTyping(genericTyping);
@@ -207,13 +207,13 @@ array_type = primitive_type.t dims.d {:
  :}
     ;
 // String
-wildcard = QUESTION {: 
+wildcard = QUESTION {:
                      return new Symbol("?");
                      //$$ = "?";
  :} | QUESTION EXTENDS reference_type.t {:
     return new Symbol("? extends " + t.getFullyTypedName());
      //$$ = "? extends " + $3.getFullyTypedName();
- :} | QUESTION SUPER reference_type.t {: 
+ :} | QUESTION SUPER reference_type.t {:
     return new Symbol("? super " +  t.getFullyTypedName());
      //$$ = "? super " + $3.getFullyTypedName();
  :}
@@ -221,23 +221,23 @@ wildcard = QUESTION {:
 // String
 wildcard_1 = QUESTION GT {:
                           return new Symbol("?>");
-                          //$$ = "?>"; 
+                          //$$ = "?>";
  :} | QUESTION EXTENDS reference_type_1.t {:
     return new Symbol("? extends " + t);
      //$$ = "? extends " + $3;
- :} | QUESTION SUPER reference_type_1.t {: 
+ :} | QUESTION SUPER reference_type_1.t {:
     return new Symbol("? super " + t) ;
      //$$ = "? super " + $3;
  :}
     ;
 // String
-wildcard_2 = QUESTION RSHIFT {: 
+wildcard_2 = QUESTION RSHIFT {:
                               return new Symbol("?>>");
-                              //$$ = "?>>"; 
- :} | QUESTION EXTENDS reference_type_2.t {: 
+                              //$$ = "?>>";
+ :} | QUESTION EXTENDS reference_type_2.t {:
                                            return new Symbol("? extends " + t);
      //$$ = "? extends " + $3;
- :} | QUESTION SUPER reference_type_2.t {: 
+ :} | QUESTION SUPER reference_type_2.t {:
                                          return new Symbol("? super " + t);
      //$$ = "? super " + $3;
  :}
@@ -255,7 +255,7 @@ wildcard_3 = QUESTION URSHIFT {:
  :}
     ;
 // String
-reference_type_1 = reference_type.r GT {: 
+reference_type_1 = reference_type.r GT {:
                                         return new Symbol( r.getFullyTypedName() + ">");
                                         //$$ = $1.getFullyTypedName() + ">";
  :} | class_or_interface.c LT type_argument_list_2.t {:
@@ -264,7 +264,7 @@ reference_type_1 = reference_type.r GT {:
  :}
     ;
 // String
-reference_type_2 = reference_type.r RSHIFT {: 
+reference_type_2 = reference_type.r RSHIFT {:
                                             return new Symbol( r.getFullyTypedName() + ">>");
                                             //$$ = $1.getFullyTypedName() + ">>";
  :} | class_or_interface.c LT type_argument_list_3.t {:
@@ -344,9 +344,9 @@ modifiers = modifier.mod {:
  :}
     ;
 // List<Object> -- This is just so we don't deal with null's.
-modifiers_none = {: 
-	return new Symbol(new ArrayList<Object>());
-//$$ = new ArrayList<Object>(); 
+modifiers_none = {:
+        return new Symbol(new ArrayList<Object>());
+//$$ = new ArrayList<Object>();
 :}
     ;
 // Object
@@ -368,7 +368,7 @@ modifier = PUBLIC {:
         :}
     | ABSTRACT {:
                 return new Symbol(Modifier.ABSTRACT);
-        //$$ = Modifier.ABSTRACT; :} 
+        //$$ = Modifier.ABSTRACT; :}
     | FINAL {:
                               return new Symbol(Modifier.FINAL);
         //$$ = Modifier.FINAL; :}
@@ -405,13 +405,13 @@ name = IDENTIFIER.id {:
  | name.n DOT IDENTIFIER.id {:
                              return new Symbol(n + ". " + id);
                              //$$ = $1 + "." + $3;
-    :}  // foo.Foo 
+    :}  // foo.Foo
     ;
 // String -- we do not use this for any info
-dims = LBRACK RBRACK {: 
+dims = LBRACK RBRACK {:
                       return new Symbol(new ArrayTypeNode());
                       // $$ = new ArrayTypeNode();
- :} | dims.d LBRACK RBRACK {: 
+ :} | dims.d LBRACK RBRACK {:
                             return new Symbol(new ArrayTypeNode(d));
      //$$ = new ArrayTypeNode($1);
  :}
@@ -420,7 +420,7 @@ dims = LBRACK RBRACK {:
 throws = THROWS class_type_list.c_list {:
                                         return new Symbol(c_list);
                                         //$$ = $2;
-                                        :} 
+                                        :}
  | /* none */ {:
                return new Symbol(new ArrayList<TypeNode>());
     //$$ = new ArrayList<TypeNode>();
@@ -439,7 +439,7 @@ class_type_list = class_type.c {:
                                                         l.add(c);
                                                         // $<List>1.add($3);
                                                         //special case
-     		                          return new Symbol(l);
+                                          return new Symbol(l);
                                                       :}
     ;
 // MethodSignatureNode
@@ -450,7 +450,7 @@ method_declarator = IDENTIFIER.id LPAREN formal_parameter_list_opt.l RPAREN {:
     ;
 
 // List<ParameterNode>
-formal_parameter_list_opt = formal_parameter_list 
+formal_parameter_list_opt = formal_parameter_list
     | /* none */ {:
                   return new Symbol(new ArrayList<ParameterNode>());
                   //$$ = new ArrayList<ParameterNode>();
@@ -511,7 +511,7 @@ variable_declarator_id = IDENTIFIER.id {:
  :} | variable_declarator_id.v LBRACK RBRACK {:
      // We know this is always preceeded by 'type' production.
      //how to accesss $0 in beaver
-     //$<Object>0 = new ArrayTypeNode($<TypeNode>0); 
+     //$<Object>0 = new ArrayTypeNode($<TypeNode>0);
                                               return new Symbol(v);
      //$$ = $1;
  :}
@@ -536,9 +536,9 @@ type_parameter = type_variable.v type_bound_opt.b {:
  :}
     ;
 // String
-type_parameter_1 = type_variable.t GT {: 
+type_parameter_1 = type_variable.t GT {:
                                        return new Symbol(t + ">");
-                                     //$$ = $1 + ">"; 
+                                     //$$ = $1 + ">";
  :}
  | type_variable.t type_bound_1.b {:
                                    return new Symbol(t + b);
@@ -546,30 +546,30 @@ type_parameter_1 = type_variable.t GT {:
  :}
     ;
 // String
-type_bound_1 = EXTENDS reference_type_1.r {: 
+type_bound_1 = EXTENDS reference_type_1.r {:
                                            return new Symbol(" extends " + r);
                                          //$$ = " extends " + $1;
  :}
- | EXTENDS reference_type.r additional_bound_list_1.a {: 
+ | EXTENDS reference_type.r additional_bound_list_1.a {:
                                                        return new Symbol(" extends " + r.getFullyTypedName() + a);
      //$$ = " extends " + $2.getFullyTypedName() + $3;
  :}
     ;
 // String
-type_bound_opt = type_bound 
+type_bound_opt = type_bound
  | none {:
          return new Symbol("");
          //$$ = "";
  :}
     ;
 // String
-type_bound = EXTENDS reference_type.r additional_bound_list_opt.a {: 
+type_bound = EXTENDS reference_type.r additional_bound_list_opt.a {:
                                                                    return new Symbol("extends " + r.getFullyTypedName() + a);
                                                                //$$ = "extends " + $2.getFullyTypedName() + $3;
  :}
     ;
 // String
-additional_bound_list_opt = additional_bound_list 
+additional_bound_list_opt = additional_bound_list
  | none {:
          return new Symbol("");
          //$$ = "";
@@ -586,13 +586,13 @@ additional_bound_list_1 = additional_bound.a additional_bound_list_1.b {:
                                                                         return new Symbol(a + b);
                                                                         //$$ = $1 + $2;
  :}
- | AND reference_type_1.t {: 
+ | AND reference_type_1.t {:
                            return new Symbol(" & " + t);
      //$$ = " & " + $1;
  :}
     ;
 // String
-additional_bound = AND interface_type.t {: 
+additional_bound = AND interface_type.t {:
                                          return new Symbol(" & " + t.getFullyTypedName());
                                        //$$ = " & " + $2.getFullyTypedName();
 :}
@@ -663,7 +663,7 @@ method_header = modifiers_opt.m type.p method_declarator.d throws.t {:
                   return new Symbol(result);
               :}
               | modifiers_opt.m LT type_parameter_list_1.l VOID method_declarator.d throws.t {:
-                                                                                            
+
                   MethodSignatureNode result = d;
                   //$$ = $5;
                   result.setModifiers(m);
@@ -753,7 +753,7 @@ annotation_array_values = annotation_value.a {:
                             a.add(v);
                             //$1.add($3);
                             //special case
-       	             return new Symbol(a);
+                     return new Symbol(a);
                              :}
     ;
 // List<AnnotationParameter> -- This is just so we don't deal with null's.
@@ -774,12 +774,3 @@ literal = STRING_LITERAL.s {:
         :}
 
 ;
-
-
-
-
-
-
-
-
-
