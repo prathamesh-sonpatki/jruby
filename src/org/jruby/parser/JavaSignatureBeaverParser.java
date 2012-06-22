@@ -123,7 +123,7 @@ public class JavaSignatureBeaverParser extends beaver.Parser {
 		"QkD#LGXSCTf460kqiNbrjShGZmLEmep5du6ag3ljIPVmVwK1fSGGna$97aZEIxwSau8nGr8" +
 		"p9VJrT9UdxiJvuvtmvN17ZUSZmmTPSdml2fqEp6Xh5iqDbY$4yxJF4u");
 
-        private static JavaSignatureParser parser = new JavaSignatureParser();
+        private static JavaSignatureBeaverParser parser = new JavaSignatureBeaverParser();
         public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
                 return (SignatureNode) parser.parse(in);
                 }
