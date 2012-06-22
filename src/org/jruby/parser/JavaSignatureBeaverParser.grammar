@@ -31,7 +31,7 @@
 %class "JavaSignatureBeaverParser";
 
 %embed {:
-        private static JavaSignatureParser parser = new JavaSignatureParser();
+        private static JavaSignatureBeaverParser parser = new JavaSignatureBeaverParser();
         public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
                 return (SignatureNode) parser.parse(in);
                 }
@@ -44,18 +44,18 @@
      ;
 %typeof BOOLEAN, BYTE, SHORT, INT, LONG, CHAR, FLOAT, DOUBLE, VOID, PUBLIC, PROTECTED, PRIVATE, STATIC, ABSTRACT, FINAL, NATIVE, SYNCHRONIZED, TRANSIENT, VOLATILE, STRICTFP, IDENTIFIER, AND , AT, DOT, COMMA, ELLIPSIS, EQUAL, LCURLY, RCURLY, LPAREN, RPAREN, LBRACK, RBRACK, QUESTION, LT, GT, THROWS, EXTENDS,  SUPER, RSHIFT,URSHIFT, CHARACTER_LITERAL, STRING_LITERAL = "String";
 
-%typeof method_declarator, method_header = "MethodSignatureNode";
-%typeof constructor_declarator, constructor_declaration = "ConstructorSignatureNode";
-%typeof formal_parameter_list_opt, formal_parameter_list = "List"; // <ParameterNode>
-%typeof modifiers_opt, modifiers, modifiers_none, throws, class_type_list = "List";
-%typeof annotation_params_opt, annotation_params, annotation_params_none = "List";
-%typeof formal_parameter = "ParameterNode";
-%typeof primitive_type, type = "TypeNode";
-%typeof class_or_interface, class_or_interface_type, array_type = "ReferenceTypeNode";
+%typeof  method_declarator, method_header = "MethodSignatureNode";
+%typeof  constructor_declarator, constructor_declaration = "ConstructorSignatureNode";
+%typeof  formal_parameter_list_opt, formal_parameter_list = "List"; // <ParameterNode>
+%typeof  modifiers_opt, modifiers, modifiers_none, throws, class_type_list = "List";
+%typeof  annotation_params_opt, annotation_params, annotation_params_none = "List";
+%typeof  formal_parameter = "ParameterNode";
+%typeof  primitive_type, type = "TypeNode";
+%typeof  class_or_interface, class_or_interface_type, array_type = "ReferenceTypeNode";
 %typeof  interface_type, class_type, reference_type = "ReferenceTypeNode";
 %typeof  name, type_variable, variable_declarator_id = "String";
 %typeof  type_bound_1, additional_bound, additional_bound_list_1 = "String";
-%typeof wildcard, type_argument, type_argument_list = "String";
+%typeof  wildcard, type_argument, type_argument_list = "String";
 %typeof  type_argument_1, type_argument_2, type_argument_3= "String";
 %typeof  wildcard_1, wildcard_2, wildcard_3 = "String";
 %typeof  reference_type_1, reference_type_2, reference_type_3= "String";
