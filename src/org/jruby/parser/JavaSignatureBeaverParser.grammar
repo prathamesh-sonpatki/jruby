@@ -31,11 +31,14 @@
 %class "JavaSignatureBeaverParser";
 
 %embed {:
-        private static JavaSignatureBeaverParser parser = new JavaSignatureBeaverParser();
-        public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
-                return (SignatureNode) parser.parse(in);
-                }
-        :};
+
+
+    private static JavaSignatureBeaverParser parser = new JavaSignatureBeaverParser();
+
+    public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
+        return (SignatureNode) parser.parse(JavaSignatureBeaverLexer.create(in));
+ }       
+:};
 
 %terminals  BOOLEAN, BYTE, SHORT, INT, LONG, CHAR, FLOAT, DOUBLE, VOID, // primitive types
      PUBLIC, PRIVATE, PROTECTED, STATIC, ABSTRACT, FINAL, NATIVE, SYNCHRONIZED, TRANSIENT, VOLATILE, STRICTFP, //modifiers

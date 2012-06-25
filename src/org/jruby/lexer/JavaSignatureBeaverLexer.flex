@@ -21,9 +21,7 @@ import org.jruby.parser.JavaSignatureBeaverParser.Terminals;
 %line
 %column
 %{
-   public static java.io.InputStream  create(java.io.InputStream stream) {
-    return  (stream);
-  }
+    
 
   boolean stringResult = false;
   boolean characterResult = false;
@@ -53,6 +51,10 @@ import org.jruby.parser.JavaSignatureBeaverParser.Terminals;
 	{
 		return new Symbol(id, yyline + 1, yycolumn + 1, yylength(), value);
 	}
+    public static JavaSignatureBeaverLexer create(java.io.InputStream stream) {
+    return new JavaSignatureBeaverLexer(stream);
+  }
+
 
 %}
 
@@ -64,8 +66,8 @@ Identifier     = [:jletter:] [:jletterdigit:]*
 //UnicodeEscape  = "\\u" {HexDigit} {HexDigit} {HexDigit} {HexDigit}
 //EscapedChar    = "\\" [nybrf\\'\"]
 //NonEscapedChar = [^nybrf\\'\"]
-CharacterLiteral = "'" ({NonEscapedChar} | {EscapedChar} | {UnicodeEscape}) "'"
-StringLiteral  = "\"" ({NonEscapedChar} | {EscapedChar} | {UnicodeEscape})* "\""
+//CharacterLiteral = "'" ({NonEscapedChar} | {EscapedChar} | {UnicodeEscape}) "'"
+//StringLiteral  = "\"" ({NonEscapedChar} | {EscapedChar} | {UnicodeEscape})* "\""
 
 %state CHARACTER
 %state STRING
