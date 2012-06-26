@@ -121,7 +121,8 @@ Identifier     = [:jletter:] [:jletterdigit:]*
     ">>"            { return newToken(Terminals.RSHIFT);       }
     ">>>"           { return newToken(Terminals.URSHIFT);      }
 
-    {Identifier}    { return newToken(Terminals.IDENTIFIER);   }
+    {Identifier}    {  
+                      return newToken(Terminals.IDENTIFIER, yytext());   }
     \"              { yybegin(STRING); } 
     \'              { yybegin(CHARACTER); } 
     {WhiteSpace}    { }
