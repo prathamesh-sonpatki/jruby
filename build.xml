@@ -136,7 +136,6 @@
     </exec>
     <chmod perm="755" file="bin/jruby"/>
   </target>
-
   <!-- Creates the directories needed for building -->
   <target name="prepare" depends="init, create-dirs, copy-resources, update-constants">
   </target>
@@ -1803,4 +1802,28 @@
     <echo>Running ${testtype} build with JDK ${jdk}</echo>
     <antcall target="${testtype}"/>
   </target>
+
+	<target name="jflextask" unless="jflex.available" description="creates JFlex Ant task">
+		<taskdef name="jflex" classname="JFlex.anttask.JFlexTask" classpath="${jflex_jar}"/>
+		<property name="jflex.available" value="yes"/>
+	</target>
+
+	<target name="beavertask" unless="beaver.available" description="creates Beaver Ant task">
+		<taskdef name="beaver" classname="beaver.comp.run.AntTask" classpath="lib/beaver-ant.jar"/>
+		<property name="beaver.available" value="yes"/>
+	</target>
+
+
+	<target name="scanner" depends="jflextask" description="generate scanner">
+		<jflex file="src/org/jruby/lexer/*.flex" nobak="yes"/>
+	</target>
+	
+  <target name="parser" depends="beavertask" description="generate parser">
+		<beaver file="src/org/jruby/parser/JavaSignatureBeaverParser.grammar" terminalNames="no"/>
+	</target>
+
+
+
+
+
 </project>
