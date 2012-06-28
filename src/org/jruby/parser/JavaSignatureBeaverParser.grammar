@@ -35,7 +35,7 @@
 
     private static JavaSignatureBeaverParser parser = new JavaSignatureBeaverParser();
 
-    public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
+    public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException, beaver.Parser.Exception {
         return (SignatureNode) parser.parse(JavaSignatureBeaverLexer.create(in));
  }       
 :};
