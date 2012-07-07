@@ -47,6 +47,7 @@ public class JavaSignatureParser {
     public static SignatureNode parse(InputStream in) throws IOException, ParserSyntaxException {
         return (SignatureNode) parser.yyparse(JavaSignatureLexer.create(in));
     }
+}
 %}
 
 // Primitive types
